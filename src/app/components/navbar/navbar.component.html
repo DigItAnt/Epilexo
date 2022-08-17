@@ -1,0 +1,62 @@
+﻿
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="d-flex-md d-flex-xs d-lg-none">
+        <ul class="navbar-nav flex-row">
+            <div class="dropdown mr-2">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="24" height="24" class="rounded-circle">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"><i class="fa fa-power-off" aria-hidden="true" (click)="logout()"></i> Logout</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item">
+                <a class="nav-link disabled" routerLink="home" routerLinkActive="active">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                </a>
+            </li> -->
+            <li class="nav-item d-flex align-items-center" *ngIf="isAdmin">
+                <a class="nav-link" routerLink="user" routerLinkActive="active">
+                    <i class="fa fa-user"></i>
+                    <span class="d-flex-xs d-lg-none ml-2">User Admin</span>
+                </a>
+                
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="lexicon" routerLinkActive="active">
+                    <i class="fa fa-edit"></i>
+                    <span class="d-flex-xs d-lg-none ml-2">Lexicon Editor</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" routerLink="search" routerLinkActive="active">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <span class="d-flex-xs d-lg-none ml-2">Search Page</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto d-none d-xs-none d-sm-none d-lg-flex align-items-center">
+            <div class="dropdown mr-2">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{username}}
+                    <!-- <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                        width="24" height="24" class="rounded-circle"> -->
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item pointer" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+</nav>

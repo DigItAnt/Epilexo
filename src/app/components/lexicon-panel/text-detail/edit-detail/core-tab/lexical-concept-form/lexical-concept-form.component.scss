@@ -1,0 +1,77 @@
+// Required
+@import "../../../../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../../../../node_modules/bootstrap/scss/mixins";
+
+.row {
+    align-items: center;
+}
+
+.btn{
+    height: 38px;
+    border-radius: .25rem !important;
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+.btn {
+    font-size: 12px;
+    height: 32px;
+}
+
+.form-check-input {
+    margin-top: 0;
+}
+
+
+.card {
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 100%;
+}
+
+#accordion {
+    width: 100%;
+}
+
+.text-id {
+    position: absolute;
+    left: 10px;
+    top: -12px;
+    background: white;
+    text-align: center;
+    color: $gray-900;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.collapse-icon {
+    position: absolute;
+    right: 4px;
+    top: -16px;
+    background: white;
+    text-align: center;
+    color: $gray-900;
+    padding: 5px 5px;
+    font-size: 16px;
+}
+
+.badge {
+    font-size: 11px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.input-group-text {
+    background-color: white;
+    border: none;
+}
+
+.input-group>.form-control:not(:last-child) {
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}

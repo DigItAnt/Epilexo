@@ -1,0 +1,245 @@
+﻿
+
+<form [formGroup]="senseCore">
+    
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-lg-12">
+            <div class="card">
+                <span class="text-id"><b>DEFINITIONS</b></span>
+                <a class="pointer" (click)="addDefinition()" [ngClass]="{no_pointer: disableAddDef}"><span class="collapse-icon"><i
+                            class="fa fa-plus-square"></i></span></a>
+                <div class="card-body">
+
+                    <div class="d-flex my-3" *ngFor="let def of staticDef; let i = index">
+                        <div class="col-md-3">
+                            <span style="line-height: 50px;" class="col-form-label">{{def['trait']}}</span>
+                        </div>
+                        <div class="input-group col-md-9">
+                            <textarea type="text" class="form-control"
+                                placeholder="" (keyup)="debounceExistingKeyup($event, i)" [value]="def['value']" style="resize: none;"></textarea>
+                            <div (click)="removeDefinition(i)" class="input-group-append ml-2" *ngIf="def['trait'] != 'definition'"> <button
+                                    class="btn btn-danger" type="button"
+                                    style="font-size: 12px; border-radius: .25rem;"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                            <div class="invalid-feedback" *ngIf="staticDef[i]['value'] == ''" style="display: block;">
+                                Please, don't leave this field blank
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="d-flex my-2" formArrayName="definition"
+                        *ngFor="let def of senseCore.get('definition')['controls']; let i = index">
+                        <div class="col-md-3" [formGroupName]="i" *ngIf="i + 1 > staticDef.length">
+                            <select class="form-control selectTrait" formControlName="propertyID" name="propertyID"
+                                style="font-size: 12px; height: 50px;" (change)="onChangeDefinitionTrait($event, i)">
+                                <option value="">Select a trait...</option>
+                                <option *ngFor="let df of definitionData" [disabled]="definitionMemory.indexOf(df) > -1" [selected]="def.value['propertyID'] === df">{{df}}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="def.get('propertyID').invalid" style="display: block;">
+                                Please, don't leave this field blank
+                            </div>
+                        </div>
+                        <div class="input-group col-md-9" [formGroupName]="i" *ngIf="i + 1 > staticDef.length">
+                            <textarea formControlName="propertyValue" name="propertyValue" type="text" class="form-control"
+                                placeholder="" (keyup)="debounceKeyup($event, i)" style="resize: none;"></textarea>
+                            <div (click)="removeDefinition(i)" class="input-group-append ml-2"> <button
+                                    class="btn btn-danger" type="button"
+                                    style="font-size: 12px; border-radius: .25rem;"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                            <div class="invalid-feedback" *ngIf="def.get('propertyValue').invalid" style="display: block;">
+                                Please, don't leave this field blank
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row ml-2 mt-3 mr-2" *ngIf="{confidence : senseCore.get('confidence').value >= 0}; let variable">
+        <div class="col-lg-3">
+            <label for="uncertainBox">Uncertain</label>
+        </div>
+        <div class="col-lg-3 input-group">
+            <input *ngIf="variable.confidence" id="attributes"  step="0.1" formControlName="confidence" name="confidence" type="number" min="0" max="1" class="form-control" placeholder="No info" [value]="senseCore.get('confidence').value">
+            <button type="button" class="btn btn-secondary btn-sm ml-2" *ngIf="!variable.confidence" (click)="variable.confidence = !variable.confidence"><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-secondary btn-sm ml-2" *ngIf="variable.confidence" (click)="variable.confidence = !variable.confidence; applyUncertain()"><i class="fas fa-minus"></i></button>
+        </div>
+    </div>
+
+    <!-- <div class="form-group row ml-2 mt-4 mr-2">
+        <label for="inputLabel" class="col-lg-3 col-form-label">Usage:</label>
+        <div class="input-group col-lg-8">
+            <textarea formControlName="usage" name="usage" class="form-control" style="resize: none;"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row ml-2 mt-4 mr-2">
+        <label for="inputLabel" class="col-lg-3 col-form-label">Topic:</label>
+        <div class="input-group col-lg-8">
+            <input formControlName="topic" name="topic" class="form-control" style="resize: none;" />
+        </div>
+    </div> -->
+
+    <!-- REFERENCE -->
+    <!-- <div formArrayName="reference">
+        <div *ngFor="let ref of senseCore['controls'].reference['controls']; let i = index">
+            <div [formGroupName]="i">
+                <div class="form-group row ml-2 mt-3 mr-2">
+                    <label for="inputLabel" class="col-lg-3 col-form-label">Reference:</label>
+                    <div class="input-group col-xl-9" *ngIf="{switch : false}; let variable">
+                        <ng-select formControlName="entity" name="entity" [items]="people" bindValue="name"
+                            bindLabel="name" placeholder="Search entity" appendTo="body" [loading]="peopleLoading"
+                            *ngIf="!variable.switch">
+                        </ng-select>
+                        <input formControlName="entity" name="entity" type="text" class="form-control"
+                            placeholder="Insert URI" *ngIf="variable.switch">
+                        <div class="input-group-append ml-3 form-check" style="align-items: center;">
+                            <input class="form-check-input vartrans-tooltip" type="checkbox"
+                                (change)="variable.switch=!variable.switch" data-toggle="tooltip"
+                                data-placement="bottom" data-trigger="hover"
+                                title="Clicca per inserire un URI manualmente">
+                        </div>
+                        <div class="input-group-append ml-2">
+                            <button class="btn btn-primary" type="button"><i
+                                    class="fa fa-external-link-alt"></i></button>
+                        </div>
+                        <div class="input-group-append ml-2">
+                            <button (click)="removeReference(i)" class="btn btn-danger" type="button"><i
+                                    class="fa fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="form-group row ml-2 mt-4 mr-2">
+
+    </div>
+
+
+    <!-- LEXICAL CONCEPT -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>LEXICAL CONCEPT</b></span>
+                <a class="pointer" (click)="addLexicalConcept()"><span class="collapse-icon"><i
+                            class="fa fa-plus-square"></i></span></a>
+
+                <div class="card-body">
+                    <div class="form-group row ml-2 mt-3 mr-2" formArrayName="lexical_concept"
+                        *ngFor="let trans of senseCore.get('lexical_concept')['controls']; let i = index">
+                        <div class="input-group col-xl-12" *ngIf="{switch : false}; let variable" [formGroupName]="i">
+                            <ng-select formControlName="lex_concept" name="lex_concept" [items]="people"
+                                bindValue="name" bindLabel="name" placeholder="Search entity" appendTo="body"
+                                [loading]="peopleLoading" *ngIf="!variable.switch">
+                            </ng-select>
+                            <input formControlName="lex_concept" name="lex_concept" type="text" class="form-control"
+                                placeholder="Insert URI" *ngIf="variable.switch">
+                            <div class="input-group-append ml-3 form-check" style="align-items: center;">
+                                <input class="form-check-input vartrans-tooltip" type="checkbox"
+                                    (change)="variable.switch=!variable.switch" data-toggle="tooltip"
+                                    data-placement="bottom" data-trigger="hover"
+                                    title="Clicca per inserire un URI manualmente">
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <button class="btn btn-primary" type="button"><i
+                                        class="fa fa-external-link-alt"></i></button>
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <button (click)="removeLexicalConcept(i)" class="btn btn-danger" type="button"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SHOW INFERENCE -->
+    <!-- <div class="form-group row ml-2 mt-3 mr-2 inference">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><a data-toggle="collapse" href="#inferenceCollapse" role="button"
+                        aria-expanded="false" aria-controls="inferenceCollapse"><span class="badge badge-warning"><b
+                                style="color: white; font-size: 12px;">SHOW INFERENCE</b></span></a></span>
+                <div class="card-body">
+                    <div class="collapse" id="inferenceCollapse">
+
+                        <div class="form-group row ml-2 mt-3 mr-2">
+                            <div class="input-group col-xl-12" *ngIf="{switch : false}; let variable">
+                                <div class="form-group row w-100">
+                                    <label for="inputLabel" class="col-lg-3 col-form-label">Is sense of:</label>
+                                    <div class="input-group col-lg-8">
+                                        <input formControlName="sense_of" name="sense_of" type="text" class="form-control"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Lexicalized Sense:</label>
+                            <div class="col-xl-9 card mt-0 p-0"
+                                style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Sense</label>
+                                </div>
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Sense</label>
+                                </div>
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Sense</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Is Evoked By:</label>
+                            <div class="col-xl-9 card mt-0 p-0"
+                                style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Entry@LANG</label>
+                                </div>
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Entry@LANG</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Narrower:</label>
+                            <div class="col-xl-9 card mt-0 p-0"
+                                style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Concept</label>
+                                    <label class="col-xl-6 col-form-label">Depth</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Borader:</label>
+                            <div class="col-xl-9 card mt-0 p-0"
+                                style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Concept</label>
+                                    <label class="col-xl-6 col-form-label">Depth</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div> -->
+</form>

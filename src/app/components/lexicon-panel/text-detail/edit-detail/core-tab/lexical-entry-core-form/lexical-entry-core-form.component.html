@@ -1,0 +1,315 @@
+﻿
+
+<form [formGroup]="coreForm" *ngIf="object != null">
+    <div *ngIf="{etymon : coreForm.get('type').value == 'Etymon'}; let variable">
+        <div class="form-group row m-2">
+            <label for="inputLabel" class="col-lg-3 col-form-label">Label:</label>
+            <div class="input-group col-lg-7">
+                <input id="label" formControlName="label" name="label" type="text" class="form-control" placeholder=""
+                    required>
+                <div class="invalid-feedback" *ngIf="emptyLabelFlag" style="display: block;">
+                    Please, insert at least three characters.
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-group row m-2">
+            <div class="col-lg-3">
+                <div class="form-check p-0">
+                    <label class="form-check-label" for="gridCheck1">
+                        Etymon
+                    </label>
+                    <input [checked]="coreForm.get('type').value == 'Etymon'" class="form-check-input" style="margin-left: 10px;" type="checkbox" id="gridCheck1" onchange="document.getElementById('typeSelect').disabled = this.checked;" (change)="variable.etymon = !variable.etymon; isEtymon(variable.etymon);">
+                </div>
+            </div>
+        </div> -->
+
+        <div class="form-group row m-2">
+            <div class="col-lg-3">
+                <label class="" for="sw">Etymon</label>
+            </div>
+            <div class="col-lg-9">
+                <div class="custom-control custom-switch d-inline" id="sw">
+                    <input type="checkbox" class="custom-control-input" id="edit_extra_block" name="extra_block" value="" [checked]="coreForm.get('type').value == 'Etymon'" style="margin-left: 10px;" onchange="document.getElementById('typeSelect').disabled = this.checked;" (change)="variable.etymon = !variable.etymon; isEtymon(variable.etymon);">
+                    <label class="custom-control-label" for="edit_extra_block"></label>
+                 </div>
+            </div>
+        </div>
+
+        <div class="form-group row m-2" *ngIf="{confidence : coreForm.get('confidence').value >= 0}; let variable">
+            <div class="col-lg-3">
+                <label for="uncertainBox">Uncertain</label>
+            </div>
+            <div class="col-lg-3 input-group uncertain">
+                <input *ngIf="variable.confidence" id="attributes"  step="0.1" formControlName="confidence" name="confidence" type="number" min="0" max="1" class="form-control" placeholder="No info" [value]="coreForm.get('confidence').value">
+                <button type="button" class="btn btn-secondary btn-sm" *ngIf="!variable.confidence" (click)="variable.confidence = !variable.confidence"><i class="fas fa-plus"></i></button>
+                <button type="button" class="btn btn-secondary btn-sm" *ngIf="variable.confidence" (click)="variable.confidence = !variable.confidence; applyUncertain()"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+
+        <div class="form-group row m-2" *ngIf="!variable.etymon">
+            <div class="col-lg-3 col-form-label">
+                <label for="inputType">Type:</label>
+            </div>
+            <div class="col-lg-9 input-group">
+                <select id="typeSelect" formControlName="type" name="type" class="form-control">
+                    <option *ngFor="let lx of lexEntryTypesData" [selected]="coreForm.get('type').value === lx['valueId']">
+                        {{lx['valueId']}}
+                    </option>
+                </select>
+                <div class="input-group-append ml-2">
+                    <button *ngIf="!variable.etymon" class="btn btn-secondary type-tooltip" type="button" data-toggle="tooltip"
+                    data-placement="top" data-trigger="hover" [attr.data-original-title]="typeDesc"
+                        style="font-size: 12px; border-radius: .25rem;"><i class="fas fa-question"></i></button>
+                    <button *ngIf="variable.etymon" class="btn btn-secondary type-tooltip" type="button" data-toggle="tooltip"
+                    data-placement="top" data-trigger="hover" title="Etymon' is a subclass of Lexical Entry that consists of individuals whose role is to describe the origin and history of another Lexical Entry."
+                    style="font-size: 12px; border-radius: .25rem;"><i class="fas fa-question"></i></button>
+                </div>
+                <div class="input-group-append ml-2">
+                    <button [style.visibility]="coreForm.get('isCognate').value ? 'visible' : 'hidden'" class="btn btn-warning type-tooltip" type="button" data-toggle="tooltip"
+                    data-placement="top" data-trigger="hover" title="In linguistics, cognates, also called lexical cognates, are words that have a common etymological origin."
+                        style="font-size: 12px; border-radius: .25rem;">Cognate</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row m-2">
+            <label for="inputLanguage" class="col-lg-3 col-form-label">Language:</label>
+            <div class="col-lg-7">                
+                <select formControlName="language" name="language" class="form-control" (change)="onChangeLanguage($event)">
+                    <option value="">Select language....</option>
+                    <option *ngFor="let la of languages" [value]="la['label'].toLowerCase()" [selected]="object.language.toLowerCase() == la['label'].toLowerCase()">{{la['label']}}
+                    </option>
+                </select>
+                <div class="invalid-feedback" *ngIf="coreForm.get('language').value == ''" style="display: block;">
+                    Please, don't leave this field blank
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- MORPHOLOGY -->
+    <div class="form-group row m-2">
+        <div class="input-group col-lg-12">
+            <div class="card">
+                <span class="text-id"><b>MORPHOLOGY</b></span>
+                <a class="pointer" (click)="addMorphoTraits()" [ngClass]="{no_pointer: disableAddMorpho}"><span class="collapse-icon"><i
+                            class="fa fa-plus-square"></i></span></a>
+                <div class="card-body">
+                    <div class="d-flex my-3">
+                        <div class="col-md-4">
+                            <label for="selectPos" class="col-form-label">Part of speech:</label>
+                        </div>
+                        <div class="input-group col-md-8">
+                            <select class="form-control selectTrait" formControlName="pos" name="pos"
+                                style="font-size:12px;" (change)="onChangePos($event)">
+                                <option value="">Select a value...</option>
+                                <option *ngFor="let item of valuePos;" [selected]="item.valueId == object.pos">
+                                    {{item.valueId}}</option>
+                            </select>
+                            <div class="input-group-append ml-2">
+                                <button class="btn btn-secondary pos-tooltip" type="button" data-toggle="tooltip"
+                                data-placement="top" data-trigger="hover" [attr.data-original-title]="posDescription"
+                                    style="font-size: 12px; border-radius: .25rem;"><i class="fas fa-question"></i></button>
+                            </div>
+
+                            <div class="invalid-feedback" *ngIf="!coreForm.get('pos').valid"
+                                style="display: block;">
+                                Please, don't leave this field blank
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <ng-container *ngFor="let stat of staticMorpho; let i = index">
+                        <div class="d-flex my-3" *ngIf="stat['trait'] != 'partOfSpeech'">
+                            <div class="col-md-4">
+                                <label class="col-form-label">{{stat['trait']}}</label>
+                            </div>
+                            <div class="input-group col-md-8">
+                                <select class="form-control selectTrait" style="font-size:12px;"
+                                    (change)="onChangeExistingValue($event, i)">
+                                    <option *ngFor="let item of valueTraits[i];"
+                                        [selected]="stat['value'] === item.valueId">{{item.valueId}}</option>
+                                </select>
+                                <div class="input-group-append ml-2">
+                                    <button *ngIf="coreForm['controls'].morphoTraits?.value[i] != null" class="btn btn-secondary trait-tooltip" type="button" data-toggle="tooltip"
+                                    data-placement="top" data-trigger="hover" [attr.data-original-title]="coreForm.get('morphoTraits').at(i).get('description').value"
+                                        style="font-size: 12px; border-radius: .25rem;"><i class="fas fa-question"></i></button>
+                                        
+                                </div>
+                                <div (click)="removeElement(i)" class="input-group-append ml-2"> <button
+                                        class="btn btn-danger" type="button"
+                                        style="font-size: 12px; border-radius: .25rem;"><i
+                                            class="fa fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container formArrayName="morphoTraits"
+                        *ngFor="let morpho of coreForm.get('morphoTraits')['controls']; let i = index">
+                        <div class="d-flex my-2" *ngIf="i + 1 > staticMorpho.length">
+                            <div class="col-md-4" [formGroupName]="i">
+                                <select class="form-control selectTrait" formControlName="trait" name="trait"
+                                    style="font-size: 12px;" (change)="onChangeTrait($event, i)">
+                                    <option value="">Select a trait...</option>
+                                    <option *ngFor="let mt of morphologyData"
+                                        [selected]="morpho.value['trait'] === mt.propertyId"
+                                        [disabled]="memoryTraits.indexOf(mt.propertyId) > -1 || mt.propertyId == 'partOfSpeech'">{{mt.propertyId}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="morpho.get('trait').invalid"
+                                    style="display: block;">
+                                    Please, don't leave this field blank
+                                </div>
+                            </div>
+                            <div class="input-group col-md-8" [formGroupName]="i">
+                                <select class="form-control selectTrait" formControlName="value" name="value"
+                                    style="font-size:12px;" (change)="onChangeValue(i)">
+                                    <option value="">Select a value...</option>
+                                    <option *ngFor="let item of valueTraits[i];" [attr.data-index]="i"
+                                        [selected]="morpho.value['value'] === item.valueId">{{item.valueId}}</option>
+                                </select>
+                                <div (click)="removeElement(i)" class="input-group-append ml-2"> <button
+                                        class="btn btn-danger" type="button"
+                                        style="font-size: 12px; border-radius: .25rem;"><i
+                                            class="fa fa-trash-alt"></i></button>
+                                </div>
+                                <div class="invalid-feedback" *ngIf="morpho.get('value').invalid"
+                                    style="display: block;">
+                                    Please, don't leave this field blank
+                                </div>
+                            </div>
+                        </div>
+
+                    </ng-container>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row m-2 mt-3">
+        <label for="inputLabel" class="col-lg-3 col-form-label">Stem type:</label>
+        <div class="input-group col-lg-7">
+            <input id="stemType" formControlName="stemType" name="stemType" type="text" class="form-control" placeholder=""
+                required>
+            <!-- <div class="invalid-feedback" *ngIf="emptyLabelFlag" style="display: block;">
+                Please, insert at least three characters.
+            </div> -->
+        </div>
+    </div>
+
+
+    <div class="form-group row m-2">
+        <div class="input-group col-lg-12">
+            <div class="card">
+                <span class="text-id"><b>DENOTES</b></span>
+                <a class="pointer" (click)="addDenotes()"><span class="collapse-icon"><i
+                            class="fa fa-plus-square"></i></span></a>
+                <div class="card-body">
+                    <div class="form-group row m-2" formArrayName="denotes"
+                        *ngFor="let den of coreForm.get('denotes')['controls']; let i = index">
+                        <div class="input-group col-xl-12"  [formGroupName]="i">
+                            <input formControlName="entity" name="entity" type="text" [value]="den.get('entity').value"
+                                class="form-control" placeholder="Insert URI"
+                               
+                                (keyup)="handleDenotes($event, i)">
+                            <div class="input-group-append ml-2">
+                                <a [href]="den.get('entity').value" target="_blank" class="btn btn-primary" type="button"><i
+                                        class="fa fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <button (click)="removeDenotes(i)" class="btn btn-danger" type="button"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row m-2">
+        <div class="input-group col-lg-12">
+            <div class="card">
+                <span class="text-id"><b>COGNATES</b></span>
+                <a class="pointer" (click)="addCognates()" [ngClass]="{no_pointer: disableAddCognates}"><span class="collapse-icon"><i
+                            class="fa fa-plus-square"></i></span></a>
+                <div class="card-body">
+                    <div class="form-group row m-2" formArrayName="cognates"
+                        *ngFor="let cog of coreForm.get('cognates')['controls']; let i = index">
+                        <div class="input-group col-xl-12"  [formGroupName]="i" *ngIf="{switch : false}; let variable">
+                            <ng-select #select_cognates formControlName="label" name="label" [dropdownPosition]="'top'"
+                                (keyup)="triggerCognates($event, i)" (change)="handleCognates(select_cognates, i)"
+                                [items]="searchResults" bindValue="label" (focus)="deleteData()" bindLabel="label"
+                                placeholder="Search cognates" appendTo="body" 
+                                *ngIf="!variable.switch && cog.get('type').value != 'external'">
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm" *ngIf="!cog.get('lila').value">
+                                    <div>
+                                        <span>{{item.label}} </span><span style="color: blue;">@{{item.language}}</span>
+                                    </div>
+
+                                </ng-template>
+
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm" *ngIf="cog.get('lila').value">
+                                    <div class="card-body p-0">
+                                        <h6 class="card-title m-0" [ngOptionHighlight]="search">{{item.labelElement}}</h6>
+                                        <small>
+                                            <span>
+                                                {{item.labelPos}} 
+                                            </span>
+                                        </small>
+                                        <small class="card-text">
+                                           
+                        
+                                        </small>
+                                       
+                                    </div>
+
+                                </ng-template>
+                            </ng-select>
+                            <input formControlName="entity" name="entity" type="text" [value]="cog.get('entity').value"
+                                class="form-control" placeholder="Insert URI"
+                                *ngIf="variable.switch || cog.get('type').value == 'external'"
+                                (keyup)="handleCognates($event, i)">
+                            <div class="input-group-append ml-3 form-check" style="align-items: center;">
+                                <input class="form-check-input cognates-tooltip" type="checkbox"
+                                    (change)="variable.switch=!variable.switch" data-toggle="tooltip"
+                                    data-placement="bottom" data-trigger="hover"
+                                    title="Clicca per inserire un URI manualmente">
+                            </div>
+                            <div class="input-group-append ml-2" *ngIf="cog.get('type').value == 'external' && cog.get('entity').value != ''" container="body" placement="top" ngbTooltip="Open in Lila Page">
+                                <a  [href]="cog.get('entity').value" target="_blank"  class="btn btn-info"
+                                    type="button"><i class="fas fa-globe-europe"></i></a>
+                            </div>
+                            <div class="input-group-append ml-2" *ngIf="cog.get('type').value == 'internal' && cog.get('entity').value != ''" container="body" placement="top" ngbTooltip="Open in new panel">
+                                <a  (click)="loadCognateData(cog.get('instanceName').value, cog.get('lexicalEntryInstanceName').value, cog.get('label').value); "  class="btn btn-primary"
+                                    type="button"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <div class="btn-group-toggle" data-toggle="buttons" placement="top" ngbTooltip="Enable LiLa endpoint" title="Enable LiLa endpoint" >
+                                    <label class="btn btn-secondary" >
+                                      <input type="checkbox" autocomplete="off" autocomplete="off" formControlName="lila" name="lila" style="border-radius: .3rem;" *ngIf="!variable.switch && cog.get('type').value != 'external'"> 
+                                        <img src="../../../../../../../assets/images/graphql.png" alt="Avatar" class="image" style="height: 20px;">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <button (click)="removeCognates(i)" class="btn btn-danger" type="button"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<!-- {{coreForm.value | json}} -->
+
+<ng-template #cognatePanel></ng-template>

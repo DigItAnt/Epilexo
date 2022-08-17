@@ -1,0 +1,228 @@
+﻿
+
+<form [formGroup]="decompForm" *ngIf="object!=null">
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Label:</label>
+        <div class="input-group col-xl-5">
+            <input formControlName="label" name="label" type="text" class="form-control" placeholder="" disabled>
+            <div class="input-group-append">
+                <div class="input-group-append ml-2">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <!-- <a class="dropdown-item" (click)="addSubterm()" [class.disabled]="subtermDisabled" style="cursor: pointer;">Sub Term</a> -->
+                          <a class="dropdown-item" (click)="addComponent()" style="cursor: pointer;">Component</a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPONENT -->
+    <div formArrayName="component">
+        <div *ngFor="let comp of decompForm['controls'].component['controls']; let i = index">
+            <div [formGroupName]="i">
+                <div class="form-group row ml-2 mt-3 mr-2">
+                    <div class="input-group col-xl-12">
+                        <div class="card">
+                            <span class="text-id"><b>COMPONENT</b></span>
+                            <!-- <a class="pointer" (click)="addRelation(i)"><span class="add-icon"><i class="fa fa-plus-square"></i></span></a> -->
+                            <a class="pointer" (click)="removeComponent(i)"><span class="trash-icon"><i class="fa fa-trash"></i></span></a>
+                            <div class="card-body">
+
+                                <div class="form-group row ml-2 mt-3 mr-2">
+                                    <label for="inputLabel" class="col-lg-3 col-form-label">Label:</label>
+                                    <div class="input-group col-lg-8">
+                                        <input id="label" (keyup)="debounceKeyup($event, i, 'label')" formControlName="label" name="label" type="text" class="form-control" placeholder=""
+                                            required>
+                                        <!-- <div class="invalid-feedback" *ngIf="emptyLabelFlag" style="display: block;">
+                                            Please, insert at least three characters.
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ml-2 mr-2">
+                                    <label for="inputLabel" class="col-lg-3 col-form-label">Note:</label>
+                                    <div class="input-group col-lg-8">
+                                        <!-- <input id="note"  formControlName="note" name="note" type="text" class="form-control" placeholder=""> -->
+                                        <textarea (keyup)="debounceKeyup($event, i, 'note')" formControlName="note" name="note" class="form-control" style="resize: none;"></textarea>
+                                    </div>
+                                </div>  
+
+                                <div class="form-group row ml-2 mt-3 mr-2" *ngIf="{confidence : comp.get('confidence').value >= 0}; let variable">
+                                    <div class="col-lg-3">
+                                        <label for="uncertainBox">Uncertain</label>
+                                    </div>
+                                    <div class="col-lg-3 input-group">
+                                        <input (change)="debounceKeyup($event, i, 'confidence')" (keyup)="debounceKeyup($event, i, 'confidence')" *ngIf="variable.confidence" id="attributes"  step="0.1" formControlName="confidence" name="confidence" type="number" min="0" max="1" class="form-control" placeholder="No info" [value]="comp.get('confidence').value">
+                                        <button type="button" class="btn btn-secondary btn-sm ml-2" *ngIf="!variable.confidence" (click)="variable.confidence = !variable.confidence"><i class="fas fa-plus"></i></button>
+                                        <button type="button" class="btn btn-secondary btn-sm ml-2" *ngIf="variable.confidence" (click)="variable.confidence = !variable.confidence; applyUncertain(i)"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- CORRESPONDS TO -->
+                                <div class="form-group row ml-2 mt-3 mr-2">
+                                    <label for="inputLabel" class="col-lg-3 col-form-label">Corresponds To:</label>
+                                    <div class="input-group col-lg-9">
+                                        <ng-select #select_corresponds_to formControlName="corresponds_to" name="corresponds_to" [dropdownPosition]="'top'"
+                                        (keyup)="triggerCorrespondsTo($event)" (change)="handleCorrespondsTo(select_corresponds_to, i)"
+                                        [items]="searchResults" bindValue="label" (focus)="deleteData()" bindLabel="label"
+                                        placeholder="Search lexical entry" appendTo="body">
+                                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                                <div>
+                                                    <span>{{item.label}} </span><span style="color: blue;">@{{item.language}}</span>
+                                                </div>
+
+                                            </ng-template>
+                                        </ng-select>
+                                        <!-- <input formControlName="entity" name="entity" type="text" class="form-control" id="inputDenotes" placeholder="Insert URI" *ngIf="variable.switch"> -->
+                                        <!-- <div class="input-group-append ml-3 form-check">
+                                            <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                                        </div> -->
+                                        <div class="input-group-append ml-2">
+                                            <button class="btn btn-primary" type="button"><i
+                                                    class="fa fa-external-link-alt"></i></button>
+                                        </div>
+                                        <!-- <div class="input-group-append ml-2">
+                                            <button (click)="removeCorrespondsToComponent(i, j)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                                        </div> -->
+                                        <div class="input-group-append ml-2">
+                                            <button (click)="addRelation(i)" [ngClass]="{no_pointer: disableAddTraits[i]}" class="btn btn-outline-primary" type="button">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                              
+            
+                                <ng-container formArrayName="relation"
+                                    *ngFor="let sub of comp['controls'].relation['controls']; let j = index">
+                                    <div class="d-flex my-2" *ngIf="j +1 > staticMorpho.length">
+                                        <div class="col-md-4" [formGroupName]="j">
+                                            <select class="form-control selectTrait" formControlName="trait" name="trait"
+                                                style="font-size: 12px;" (change)="onChangeTrait($event, i, j)">
+                                                <option value="">Select a trait...</option>
+                                                <option *ngFor="let mt of morphologyData"
+                                                    [selected]="sub.value['trait'] === mt.propertyId"
+                                                    [disabled]="memoryComponent[i].morphology.indexOf(mt.propertyId) > -1 ">{{mt.propertyId}}</option>
+                                            </select>
+                                            <div class="invalid-feedback" *ngIf="sub.get('trait').invalid"
+                                                style="display: block;">
+                                                Please, don't leave this field blank
+                                            </div>
+                                        </div>
+                                        <!-- {{valueTraits | json}} -->
+                                        <div class="input-group col-md-8" [formGroupName]="j">
+                                            <!-- {{valueTraits | json}} {{i}} {{j}} -->
+                                            <select class="form-control selectTrait" formControlName="value" name="value"
+                                                style="font-size:12px;" (change)="onChangeValue(i, j)">
+                                                <option value="">Select a value...</option>
+                                                <option *ngFor="let item of valueTraits[i][j];" [attr.data-index]="j"
+                                                    [selected]="sub.value['value'] === item.valueId">{{item.valueId}}</option>
+                                            </select>
+                                            <div (click)="removeRelation(i, j)" class="input-group-append ml-2"> <button
+                                                    class="btn btn-danger" type="button"
+                                                    style="font-size: 12px; border-radius: .25rem;"><i
+                                                        class="fa fa-trash-alt"></i></button>
+                                            </div>
+                                            <div class="invalid-feedback" *ngIf="sub.get('value').invalid"
+                                                style="display: block;">
+                                                Please, don't leave this field blank
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                </ng-container>
+                                
+                                <!-- <div formArrayName="relation" class="col-xl-12">
+                                    <div *ngFor="let sub of comp['controls'].relation['controls']; let j = index">
+                                        <div [formGroupName]="j" class="d-xl-flex" style="align-items: center;">
+                                            <div class="form-group row ml-2 mt-2 mr-2 w-100">
+                                                <div class="col-xl-6">
+                                                    <select class="form-control" formControlName="trait" name="trait">
+                                                        <option>Trait...</option>
+                                                        <option>...</option>
+                                                    </select>
+                                                </div>
+                                                <div class="input-group col-xl-6" *ngIf="{switch : false}; let variable">
+                                                    <select class="form-control" formControlName="value" name="value" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;">
+                                                        <option>Relations...</option>
+                                                        <option>...</option>
+                                                    </select>
+                                                    <div class="input-group-append ml-2">
+                                                        <button (click)="removeRelation(i, j)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>                                                 
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SUB-TERM -->
+    
+        
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>SUBTERM</b></span>
+                <a class="pointer" (click)="addSubterm()"><span class="add-icon" [class.disabled]="subtermDisabled"><i class="fa fa-plus-square"></i></span></a>
+                <!-- <a class="pointer" (click)="removeSubterm(i)"><span class="trash-icon"><i class="fa fa-trash"></i></span></a> -->
+                <div class="card-body">
+
+                    
+            
+                    <!-- SUB-TERM -->
+                    <div formArrayName="subterm" class="col-xl-12">
+                        <div *ngFor="let sub of decompForm['controls'].subterm['controls']; let i = index">
+                            <div [formGroupName]="i" class="d-xl-flex" style="align-items: center;">
+                                <div class="form-group row ml-2 mt-2 mr-2 w-100">
+                                    <div class="input-group" *ngIf="{switch : false}; let variable">
+                                        <ng-select #select_subterm formControlName="label" *ngIf="!variable.switch" name="label" [dropdownPosition]="'top'"
+                                                (keyup)="triggerSubterm($event)" (change)="handleSubterm(select_subterm, i)"
+                                                [items]="searchResults" bindValue="label" (focus)="deleteData()" bindLabel="label"
+                                                placeholder="Search lexical entries" appendTo="body">
+                                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                                    <div>
+                                                        <span>{{item.label}} </span><span style="color: blue;">@{{item.language}}</span>
+                                                    </div>
+
+                                                </ng-template>
+                                            </ng-select>
+                                        <input (keyup)="handleSubterm($event, i)" formControlName="entity" name="entity" type="text" class="form-control" id="inputDenotes" placeholder="Insert URI" *ngIf="variable.switch">
+                                        <div class="input-group-append ml-3 form-check">
+                                            <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                                        </div>
+                                        <!-- <div class="input-group-append ml-2">
+                                            <button class="btn btn-primary" type="button"><i
+                                                    class="fa fa-external-link-alt"></i></button>
+                                        </div> -->
+                                        <div class="input-group-append ml-2">
+                                            <button (click)="removeSubterm(i)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                                        </div>
+                                       <!--  <div class="input-group-append ml-2">
+                                            <button  class="btn btn-outline-primary invisible" type="button"><i class="fa fa-plus"></i></button>
+                                        </div> -->
+                                    </div>
+                                </div>                                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+           
+    
+</form>

@@ -1,0 +1,449 @@
+﻿<div class="input-group col-xl-12 searchSelect">
+    <ng-select #select_form name="entity" [addTag]="addNewForm" [clearable]="false" (focus)="true" bindValue="label"
+        bindLabel="label" placeholder="Search form" appendTo=".token_modal" (keyup)="triggerSearch($event)"
+        [items]="searchResults" (change)="handleForm(select_form)" [loading]="loader">
+        <!--  -->
+        <!-- && cog.get('type').value != 'external' -->
+        <!-- "
+     -->
+        <!-- (focus)="deleteData()" -->
+        <!-- -->
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+            <!--     <div>
+    <span>{{item.label}} </span><span style="color: blue;">@{{item.language}}</span>
+</div> -->
+            <div class="card-body p-0">
+                <h6 class="card-title m-0" [ngOptionHighlight]="search">{{item.label}}</h6>
+                <!-- <p class="card-subtitle mb-2 text-muted">{{item.type}}</p> -->
+                <small *ngFor="let sub of item.morphology">
+                    <span *ngIf="sub.trait == 'case' || sub.trait == 'gender' || sub.trait == 'number' || sub.trait == 'partOfSpeech'">
+                        {{sub.trait}} : {{sub.value}} <br>
+                    </span>
+                </small>
+                <small class="card-text">
+                    <!-- <img height="15" width="15" [src]="item.avatar"/> -->
+                    <!-- LexicalEntry: {{item.lexicalEntryInstanceName}} -->
+
+                </small>
+                <!--  <div *ngIf="item.name === 'Pavilnys'">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+    </div> -->
+            </div>
+
+        </ng-template>
+    </ng-select>
+
+    <div class="input-group-append ml-2">
+        <button (click)="clearAll()" class="btn btn-danger" type="button">Clear</button>
+    </div>
+</div>
+
+<ng-template #addFormModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Wizard</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <form [formGroup]="stepOneForm" *ngIf="modalStep == 1">
+        <div class="modal-body">
+            <!-- {{modalStep}} -->
+            <div class="form-group" >
+                <p>To create a new lexical form it is necessary to have a reference lexical entry. Select one of the two options:</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="existOrNot" name="existOrNot" type="radio" value="new">
+                    <label class="form-check-label" for="existOrNot">Create new lexical entry</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="existOrNot" name="existOrNot" type="radio" value="exist">
+                    <label class="form-check-label" for="existOrNot">Choose one existing lexical entry</label>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="previousStep()"
+                [disabled]="modalStep == 1">Previous</button>
+            <button type="button" class="btn btn-outline-dark" (click)="nextStep()" [disabled]="stepOneForm.invalid">Next</button>
+        </div>  
+       
+    </form>
+
+    <form [formGroup]="stepTwoForm"  *ngIf="modalStep == 2">
+        <div class="modal-body">
+            <!-- {{modalStep}} -->
+            <p>Choose a lexical entry:</p>
+            <div class="input-group searchSelect">
+                <ng-select #search_lexicalEntry formControlName="lexicalEntry" name="lexicalEntry" [clearable]="false" (focus)="true" bindValue="lexicalEntryInstanceName"
+                bindLabel="label" placeholder="Search form" appendTo="body" (keyup)="triggerSearchLexicalEntries($event)"
+                [items]="lex_searchResuts" [loading]="loader"> </ng-select>
+                
+                <div class="input-group-append ml-2">
+                    <button (click)="clearAll()" class="btn btn-danger" type="button">Clear</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="previousStep()"
+                [disabled]="modalStep == 1">Previous</button>
+            <button type="button" class="btn btn-outline-dark" (click)="nextStep()" [disabled]="stepTwoForm.invalid">Next</button>
+        </div>  
+       
+    </form>
+
+    <form [formGroup]="stepThreeForm"  *ngIf="modalStep == 3">
+        <div class="modal-body">
+            <!-- {{modalStep}} -->
+            <p>Enter basic info for lexical entry creation:</p>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="label">Label</label>
+                    <input type="text" class="form-control" formControlName="label" name="label" id="label" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="label">Type</label>
+                    <select class="custom-select" formControlName="type" name="type" id="type" required>
+                        <option selected value="">Select type</option>
+                        <option *ngFor="let type of lexEntryTypesData" [value]="type.valueId">{{type.valueLabel}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="label">Language</label>
+                    <select class="custom-select" formControlName="language" name="language" id="language" required>
+                        <option selected value="">Select language</option>
+                        <option *ngFor="let lang of languages" [value]="lang.label">{{lang.label}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="label">Part of Speech</label>
+                    <select class="custom-select" formControlName="pos" name="pos" id="pos" required>
+                        <option selected value="">Select pos</option>
+                        <option *ngFor="let pos of morphologyData" [value]="pos.valueId">{{pos.valueLabel}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-row">
+                
+            </div> -->
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="previousStep()"
+                [disabled]="modalStep == 1">Previous</button>
+            <button type="button" class="btn btn-outline-dark" (click)="nextStep()" [disabled]="stepThreeForm.invalid">Next</button>
+        </div>  
+       
+    </form>
+
+    <form [formGroup]="stepFourForm"  *ngIf="modalStep == 4">
+        <div class="modal-body">
+            <p>Enter basic info for form creation:</p>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="label">Written Form</label>
+                    <input type="text" class="form-control" formControlName="writtenForm" name="writtenForm" id="writtenForm" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="label">Type</label>
+                    <select class="custom-select" formControlName="type" name="type" id="type" required>
+                        <option selected value="">Select type</option>
+                        <option *ngFor="let type of typesData" [value]="type.valueId">{{type.valueLabel}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="previousStep()">Previous</button>
+            <button type="button" class="btn btn-outline-dark" (click)="nextStep()" [disabled]="stepFourForm.invalid">Next</button>
+        </div>  
+    </form>
+
+    <div *ngIf="modalStep == 5">
+        <div class="modal-body">
+            <p>Summary:</p>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Lexical form to create</p>
+                </div>
+                <div class="col-8">
+                    <p>{{stepFourForm.get('writtenForm').value}}  -  {{stepFourForm.get('type').value}}</p>
+               </div>
+            </div>
+
+            <div class="row" *ngIf="stepTwoForm.touched">
+                <div class="col-4">
+                    <p>Lexical Entry to be attached</p>
+                </div>
+                <div class="col-8">
+                    <p>{{stepTwoForm.get('lexicalEntry').value}}</p>
+               </div>
+            </div>
+
+            <div class="row" *ngIf="stepThreeForm.touched">
+                <div class="col-4">
+                    <p>New lexical entry to be attached</p>
+                </div>
+                <div class="col-8">
+                    <p>{{stepThreeForm.get('label').value}}</p>
+               </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="previousStep()">Previous</button>
+            <button type="button" class="btn btn-outline-dark" (click)="nextStep()">Proceed</button>
+        </div>
+    </div>
+
+
+    <form [formGroup]="statusForm"  *ngIf="modalStep == 6">
+        <div class="modal-body">
+            <p>Summary:</p>
+            
+            <div class="row" *ngIf="stepThreeForm.touched">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('lexicalEntryCreation').value == 'pause'}">Lexical entry creation</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('lexicalEntryCreation').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('lexicalEntryCreation').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('lexicalEntryCreation').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('lexicalEntryCreation').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row" *ngIf="stepThreeForm.touched">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('attachingLanguage').value == 'pause'}">Attaching language</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLanguage').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLanguage').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLanguage').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLanguage').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row" *ngIf="stepThreeForm.touched">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('attachingType').value == 'pause'}">Attaching type</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingType').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingType').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingType').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingType').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row" *ngIf="stepThreeForm.touched">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('attachingLabel').value == 'pause'}">Attaching label</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLabel').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLabel').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLabel').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingLabel').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row" *ngIf="stepThreeForm.touched">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('attachingPos').value == 'pause'}">Attaching part of speech</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingPos').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingPos').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingPos').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingPos').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('creatingForm').value == 'pause'}">Creating form</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('creatingForm').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('creatingForm').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('creatingForm').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('creatingForm').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('attachingWrittenForm').value == 'pause'}">Attaching written form property</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingWrittenForm').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingWrittenForm').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingWrittenForm').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingWrittenForm').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('attachingFormType').value == 'pause'}">Attaching type property</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingFormType').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingFormType').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingFormType').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('attachingFormType').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p [ngClass]="{'text-muted': statusForm.get('finish').value == 'pause'}">Finish</p>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('finish').value == 'pause'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-pause-circle fa-2x" style="color: gray;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('finish').value == 'pending'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="spinner-border mr-auto ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('finish').value == 'ok'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-check-circle fa-2x" style="color: green;"></i></div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="statusForm.get('finish').value == 'error'">
+                        <!-- <strong>Loading...</strong> -->
+                        <div class="mr-auto ml-auto" aria-hidden="true"><i class="fas fa-times-circle fa-2x" style="color: red;"></i></div>
+                    </div>
+               </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-outline-dark" (click)="previousStep()">Previous</button> -->
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('finish')" [disabled]="statusForm.get('finish').value != 'ok'">Close</button>
+        </div>
+    </form>
+    
+    
+</ng-template>

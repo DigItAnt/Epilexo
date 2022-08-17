@@ -1,0 +1,26 @@
+{
+    "/LexO-backend-itant/service/*": {
+        "target": "https://lari2.ilc.cnr.it",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/cash/*": {
+        "target": "https://lari2.ilc.cnr.it",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/auth/*": {
+        "target": "https://lari2.ilc.cnr.it",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/leiden/*": {
+        "target": "https://lari2.ilc.cnr.it",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}

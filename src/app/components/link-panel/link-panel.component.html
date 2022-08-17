@@ -1,0 +1,18 @@
+﻿
+
+<div class="card">
+    <div class="card-header" id="referenceHeading">
+        <h5 class="mb-0">
+            <a class="btn btn-link w-100 d-flex align-self-center collapsed" data-toggle="collapse"
+                data-target="#referenceCollapse" aria-expanded="true" aria-controls="referenceCollapse">
+                Link Panel&nbsp; <span *ngIf="counterElement > 0">({{counterElement}})</span><i class="fa  ml-auto"></i>
+            </a>
+        </h5>
+    </div>
+    <div id="referenceCollapse" class="collapse" aria-labelledby="referenceHeading">
+        <div class="card-body">
+            <app-see-also *ngIf="seeAlsoData != undefined" [seeAlsoData]="seeAlsoData"></app-see-also>
+            <app-same-as *ngIf="sameAsData != undefined"  [sameAsData]="sameAsData"></app-same-as>
+        </div>
+    </div>
+</div>

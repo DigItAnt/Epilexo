@@ -1,0 +1,709 @@
+﻿/*
+  © Copyright 2021-2022  Istituto di Linguistica Computazionale "A. Zampolli", Consiglio Nazionale delle Ricerche, Pisa, Italy.
+ 
+This file is part of EpiLexo.
+
+EpiLexo is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+EpiLexo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with EpiLexo. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>lex-o-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">lex-o-angular documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >DataService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/components/lexicon-panel/text-detail/edit-detail/core-tab/lexical-entry-core-form/data.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getAlbums" >getAlbums</a>
+                            </li>
+                            <li>
+                                <a href="#getGithubAccounts" >getGithubAccounts</a>
+                            </li>
+                            <li>
+                                <a href="#getPeople" >getPeople</a>
+                            </li>
+                            <li>
+                                <a href="#getPhotos" >getPhotos</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/lexicon-panel/text-detail/edit-detail/core-tab/lexical-entry-core-form/data.service.ts:21</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAlbums"></a>
+                    <span class="name">
+                        <span ><b>getAlbums</b></span>
+                        <a href="#getAlbums"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAlbums()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">src/app/components/lexicon-panel/text-detail/edit-detail/core-tab/lexical-entry-core-form/data.service.ts:33</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getGithubAccounts"></a>
+                    <span class="name">
+                        <span ><b>getGithubAccounts</b></span>
+                        <a href="#getGithubAccounts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getGithubAccounts(term: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/app/components/lexicon-panel/text-detail/edit-detail/core-tab/lexical-entry-core-form/data.service.ts:25</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>term</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>null</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPeople"></a>
+                    <span class="name">
+                        <span ><b>getPeople</b></span>
+                        <a href="#getPeople"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPeople(term: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/app/components/lexicon-panel/text-detail/edit-detail/core-tab/lexical-entry-core-form/data.service.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>term</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>null</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Person.html" target="_self" >Observable&lt;Person[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPhotos"></a>
+                    <span class="name">
+                        <span ><b>getPhotos</b></span>
+                        <a href="#getPhotos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPhotos()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/components/lexicon-panel/text-detail/edit-detail/core-tab/lexical-entry-core-form/data.service.ts:37</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Observable, of } from &#x27;rxjs&#x27;;
+import { delay, map } from &#x27;rxjs/operators&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
+
+export interface Person {
+    id: string;
+    isActive: boolean;
+    age: number;
+    name: string;
+    gender: string;
+    company: string;
+    email: string;
+    phone: string;
+    disabled?: boolean;
+}
+
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class DataService {
+    constructor(private http: HttpClient) { }
+
+    //@ts-ignore
+    getGithubAccounts(term: string &#x3D; null) {
+        if (term) {
+            return this.http.get&lt;any&gt;(&#x60;https://api.github.com/search/users?q&#x3D;${term}&#x60;).pipe(map(rsp &#x3D;&gt; rsp.items));
+        } else {
+            return of([]);
+        }
+    }
+
+    getAlbums() {
+        return this.http.get&lt;any[]&gt;(&#x27;https://jsonplaceholder.typicode.com/albums&#x27;);
+    }
+
+    getPhotos() {
+        return this.http.get&lt;any[]&gt;(&#x27;https://jsonplaceholder.typicode.com/photos&#x27;);
+    }
+
+    //@ts-ignore
+    getPeople(term: string &#x3D; null): Observable&lt;Person[]&gt; {
+        let items &#x3D; getMockPeople();
+        if (term) {
+            items &#x3D; items.filter(x &#x3D;&gt; x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) &gt; -1);
+        }
+        return of(items).pipe(delay(500));
+    }
+}
+
+function getMockPeople() {
+    return [
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c36e7a7f00cf0d7cb&#x27;,
+            &#x27;index&#x27;: 2,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 23,
+            &#x27;name&#x27;: &#x27;Karyn Wright&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;ZOLAR&#x27;,
+            &#x27;email&#x27;: &#x27;karynwright@zolar.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (851) 583-2547&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c2340978ec3d2c0ea&#x27;,
+            &#x27;index&#x27;: 3,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 35,
+            &#x27;name&#x27;: &#x27;Rochelle Estes&#x27;,
+            &#x27;disabled&#x27;: true,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;EXTRAWEAR&#x27;,
+            &#x27;email&#x27;: &#x27;rochelleestes@extrawear.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (849) 408-2029&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c663ea0af9ad0dae8&#x27;,
+            &#x27;index&#x27;: 4,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 25,
+            &#x27;name&#x27;: &#x27;Mendoza Ruiz&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;ZYTRAX&#x27;,
+            &#x27;email&#x27;: &#x27;mendozaruiz@zytrax.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (904) 536-2020&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13cc9eeb36511d65acf&#x27;,
+            &#x27;index&#x27;: 5,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 39,
+            &#x27;name&#x27;: &#x27;Rosales Russell&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;ELEMANTRA&#x27;,
+            &#x27;email&#x27;: &#x27;rosalesrussell@elemantra.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (868) 473-3073&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c728cd3f43cc0fe8a&#x27;,
+            &#x27;index&#x27;: 6,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 32,
+            &#x27;name&#x27;: &#x27;Marquez Nolan&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;MIRACLIS&#x27;,
+            &#x27;disabled&#x27;: true,
+            &#x27;email&#x27;: &#x27;marqueznolan@miraclis.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (853) 571-3921&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13ca51b0aaf8a99c05a&#x27;,
+            &#x27;index&#x27;: 7,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 28,
+            &#x27;name&#x27;: &#x27;Franklin James&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;CAXT&#x27;,
+            &#x27;email&#x27;: &#x27;franklinjames@caxt.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (868) 539-2984&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13cc3b9381ffcb1d6f7&#x27;,
+            &#x27;index&#x27;: 8,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 24,
+            &#x27;name&#x27;: &#x27;Elsa Bradley&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;MATRIXITY&#x27;,
+            &#x27;email&#x27;: &#x27;elsabradley@matrixity.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (994) 583-3850&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13ce58cb6ff62c65164&#x27;,
+            &#x27;index&#x27;: 9,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 40,
+            &#x27;name&#x27;: &#x27;Pearson Thompson&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;EZENT&#x27;,
+            &#x27;email&#x27;: &#x27;pearsonthompson@ezent.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (917) 537-2178&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c90b95eb68010c86e&#x27;,
+            &#x27;index&#x27;: 10,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 32,
+            &#x27;name&#x27;: &#x27;Ina Pugh&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;MANTRIX&#x27;,
+            &#x27;email&#x27;: &#x27;inapugh@mantrix.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (917) 450-2372&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c2b1746e12788711f&#x27;,
+            &#x27;index&#x27;: 11,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 25,
+            &#x27;name&#x27;: &#x27;Nguyen Elliott&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;PORTALINE&#x27;,
+            &#x27;email&#x27;: &#x27;nguyenelliott@portaline.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (905) 491-3377&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c605403381eec5019&#x27;,
+            &#x27;index&#x27;: 12,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 31,
+            &#x27;name&#x27;: &#x27;Mills Barnett&#x27;,
+            &#x27;gender&#x27;: &#x27;male&#x27;,
+            &#x27;company&#x27;: &#x27;FARMEX&#x27;,
+            &#x27;email&#x27;: &#x27;millsbarnett@farmex.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (882) 462-3986&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c67e2e6d1a3cd6ca5&#x27;,
+            &#x27;index&#x27;: 13,
+            &#x27;isActive&#x27;: true,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 36,
+            &#x27;name&#x27;: &#x27;Margaret Reynolds&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;ROOFORIA&#x27;,
+            &#x27;email&#x27;: &#x27;margaretreynolds@rooforia.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (935) 435-2345&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c947c836d177aa85c&#x27;,
+            &#x27;index&#x27;: 14,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 29,
+            &#x27;name&#x27;: &#x27;Yvette Navarro&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;KINETICA&#x27;,
+            &#x27;email&#x27;: &#x27;yvettenavarro@kinetica.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (807) 485-3824&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c5dbbe61245c1fb73&#x27;,
+            &#x27;index&#x27;: 15,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 20,
+            &#x27;name&#x27;: &#x27;Elisa Guzman&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;KAGE&#x27;,
+            &#x27;email&#x27;: &#x27;elisaguzman@kage.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (868) 594-2919&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c38fd49fefea8db80&#x27;,
+            &#x27;index&#x27;: 16,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 33,
+            &#x27;name&#x27;: &#x27;Jodie Bowman&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;EMTRAC&#x27;,
+            &#x27;email&#x27;: &#x27;jodiebowman@emtrac.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (891) 565-2560&#x27;
+        },
+        {
+            &#x27;id&#x27;: &#x27;5a15b13c9680913c470eb8fd&#x27;,
+            &#x27;index&#x27;: 17,
+            &#x27;isActive&#x27;: false,
+            &#x27;picture&#x27;: &#x27;http://placehold.it/32x32&#x27;,
+            &#x27;age&#x27;: 24,
+            &#x27;name&#x27;: &#x27;Diann Booker&#x27;,
+            &#x27;gender&#x27;: &#x27;female&#x27;,
+            &#x27;company&#x27;: &#x27;LYRIA&#x27;,
+            &#x27;email&#x27;: &#x27;diannbooker@lyria.com&#x27;,
+            &#x27;phone&#x27;: &#x27;+1 (830) 555-3209&#x27;
+        }
+    ]
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'DataService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

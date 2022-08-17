@@ -1,0 +1,140 @@
+<form [formGroup]="conceptFilterForm">
+  <div class="input-group col-md-12 mt-2 px-1">
+    <input formControlName="search_text" id="filterConcept" name="search_text" type="text" class="form-control"
+      placeholder="Search" />
+    <div class="input-group-append">
+      <span class="input-group-text loading_icon_append border-left-0" id="basic-addon2">
+        <div class="spinner-border spinner-border-sm m-1" role="status" *ngIf="searchIconSpinner">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </span>
+    </div>
+    <div id="buttons-container" class="input-group-append">
+      <!-- <button class="btn btn-info btn-block filter-button" type="button" data-toggle="popover" data-placement="bottom"
+        data-trigger="hover"><i class="fa fa-question"></i></button> -->
+      <button class="btn btn-sm btn-secondary btn-block filter-button" type="button" value="Filter" title="Filter"
+        data-toggle="collapse" data-target="#conceptFilterCollapse" aria-expanded="false"
+        aria-controls="conceptFilterCollapse"><i class="fa fa-filter"></i></button>
+      <button class="btn btn-sm btn-danger btn-block reset-button" type="button" value="Reset" title="Reset"
+        (click)="resetFields();" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+          class="fa fa-times"></i></button>
+      <button class="btn btn-sm btn-block counter-button" type="button"><span
+          class="font-weight-bold font-italic text-muted">{{counter}}</span></button>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap mt-3">
+
+    <div class="col-md-6 col-sm-6">
+      <div class="form-check">
+        <input formControlName="search_mode" class="form-check-input" type="radio" name="search_mode" id="startsRadio"
+          value="starts">
+        <label class="form-check-label" for="startsRadio">
+          Starts
+        </label>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <div class="form-check">
+        <input formControlName="search_mode" class="form-check-input" type="radio" name="search_mode" id="containsRadio"
+          value="contains">
+        <label class="form-check-label" for="containsRadio">
+          Contains
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+</form>
+
+<div class="d-flex flex-wrap mt-3 col-md-12">
+  <div class="input-group justify-content-end">
+    <div class="input-group-append">
+      <button class="btn btn-light btn-block filter-button" title="Add new child for selected node"><i
+          class="fas fa-plus 2x"></i></button>
+      <button class="btn btn-light btn-block reset-button" type="button" value="Reset"
+        title="Add new sibling for selected node"
+        style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+          class="fas fa-user-plus 2x"></i></button>
+      <button class="btn btn-light btn-block reset-button" type="button" value="Reset" title="Delete selected node"
+        style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+          class="fas fa-times-circle 2x"></i></button>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-12 mt-3 rounded border border-secondary tree-view" infiniteScroll [infiniteScrollDistance]="0.4"
+  [infiniteScrollThrottle]="150" [infiniteScrollContainer]="'.search-results'" [fromRoot]="true"
+  (scrolled)="onScrollDown(treeConcept.treeModel)">
+  <p *ngIf="show">Nessun risultato</p>
+
+  <tree-root #treeConcept [nodes]="nodes" [(state)]="state" [options]="options" [focused]="true"
+    (activate)="onEvent($event)" (moveNode)="onMoveNode($event)" [focused]="true" (activate)="onEvent($event)"
+    (deactivate)="onEvent($event)" class="lexicalConceptTree">
+
+    <div id="lazyLoadingModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="mx-3" *ngIf="show">Nessun risultato</p>
+    <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+      <div class="node-wrapper" style="justify-content: space-between; padding: 0px 15px;">
+        <!-- [style.padding-left]="node.getNodePadding()" -->
+        <div>
+          <tree-node-expander [node]="node" *ngIf="node.data.hasChildren == true"></tree-node-expander>
+          <div class="node-content-wrapper" [class.node-content-wrapper-active]="node.isActive"
+            [class.node-content-wrapper-focused]="node.isFocused" (click)="node.mouseAction('click', $event)"
+            (dblclick)="node.mouseAction('dblClick', $event)" [contextMenu]="basicMenu"
+            [contextMenuSubject]="node.data">
+
+            <span
+              *ngIf="node.data.count == undefined && labelView && node.data.componentInstanceName == undefined && node.data.definition == undefined && node.data.type!='canonicalForm' && node.data.sense == undefined">{{
+              node.data.label }}</span>
+            <span
+              *ngIf="node.data.count == undefined && idView && node.data.definition == undefined && node.data.type!='canonicalForm' && node.data.sense == undefined && node.data.etymologyInstanceName == undefined">{{
+              node.data.lexicalEntryInstanceName }}</span>
+
+            <span
+              *ngIf="node.data.count == undefined && labelView && node.data.definition == undefined && node.data.type=='canonicalForm' && node.data.sense == undefined"><b>{{
+                node.data.label }}</b></span>
+          
+
+           
+            <span class="lexical-tooltip"
+              *ngIf="node.data.count == undefined && labelView && node.data.definition != undefined && node.data.label != undefined"
+              data-toggle="tooltip" data-html="true" [title]="node.data.definition">{{node.data.label.length >
+              10 ? (node.data.label | slice:0:10) +'...' : node.data.label}}</span>
+            <span class="lexical-tooltip"
+              *ngIf="node.data.count == undefined && idView && node.data.definition != undefined && node.data.label != undefined"
+              data-toggle="tooltip" data-html="true" [title]="node.data.definition">{{ node.data.instanceName
+              }}</span>
+
+            <span *ngIf="node.data.count != undefined"><i><span
+                  style="color: #6e6e6e">{{node.data.label}}</span></i>&nbsp;({{ node.data.count
+              }})</span>
+           <!--  <span *ngIf="node.data.writtenRep != ''">{{ node.data.writtenRep }}</span>
+            <sub *ngIf="labelView && node.data.sense == undefined">{{node.data.pos}}</sub>
+            <span *ngIf="node.data.language != null && labelView" class="lang">@{{node.data.language}}</span> -->
+          
+          </div>         
+        </div>
+
+      </div>
+    </ng-template>
+  </tree-root>
+</div>

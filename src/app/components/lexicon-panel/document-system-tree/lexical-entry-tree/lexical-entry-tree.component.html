@@ -1,0 +1,273 @@
+﻿
+
+<form [formGroup]="filterForm">
+    <div class="input-group col-md-12 mt-1 p-0">
+        <input formControlName="text" id="filterLexicalEntry" name="text" type="text" class="form-control"
+            placeholder="Search" [value]="filterForm.get('text').value"/>
+        <div class="input-group-append">
+            <span class="input-group-text loading_icon_append" id="basic-addon2">
+                <div class="spinner-border spinner-border-sm m-1" role="status" *ngIf="searchIconSpinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </span>
+        </div>
+        <div id="buttons-container" class="input-group-append">
+            <button class="btn  btn-sm btn-info btn-block filter-button" type="button" data-toggle="popover"
+                data-placement="bottom" data-trigger="hover"><i class="fa fa-question"></i></button>
+            <button class="btn btn-sm btn-secondary btn-block filter-button" type="button" value="Filter" title="Filter"
+                data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false"
+                aria-controls="filterCollapse"><i class="fa fa-filter"></i></button>
+            <button class="btn btn-sm btn-danger btn-block reset-button" type="button" value="Reset" title="Reset"
+                (click)="resetFields();" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+                    class="fa fa-times"></i></button>
+            <button class="btn btn-block counter-button" type="button"><span
+                    class="font-weight-bold font-italic text-muted">{{counter}}</span></button>
+        </div>
+    </div>
+
+
+    <div class="d-flex flex-wrap mt-3">
+        <div class="col-md-6 col-sm-3">
+            <div class="form-check">
+                <input formControlName="searchMode" class="form-check-input" type="radio" name="searchMode"
+                    id="equalsRadio" value="equals">
+                <label class="form-check-label" for="equalsRadio">
+                    Equals
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-3">
+            <div class="form-check">
+                <input formControlName="searchMode" class="form-check-input" type="radio" name="searchMode"
+                    id="startRadio" value="startsWith">
+                <label class="form-check-label" for="startRadio">
+                    Starts
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-3">
+            <div class="form-check">
+                <input formControlName="searchMode" class="form-check-input" type="radio" name="searchMode"
+                    id="containsRadio" value="contains">
+                <label class="form-check-label" for="containsRadio">
+                    Contains
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-3">
+            <div class="form-check">
+                <input formControlName="searchMode" class="form-check-input" type="radio" name="searchMode"
+                    id="endRadio" value="end">
+                <label class="form-check-label" for="endRadio">
+                    Ends
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="collapse multi-collapse" id="filterCollapse">
+        <div class="d-flex flex-wrap mt-3">
+            <div class="col-md-6 col-sm-12">
+                <select formControlName="type" class="form-control" id="type" name="type">
+                    <option value="">Type</option>
+                    <option *ngFor="let type of types" [value]="type.label">{{type.label}} - {{type.count}}</option>
+                </select>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="d-md-none mt-3"></div>
+                <select formControlName="pos" class="form-control" id="pos" name="pos">
+                    <option value="">Pos</option>
+                    <option *ngFor="let ps of partOfSpeech" [value]="ps.label">{{ps.label}} - {{ps.count}} </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap mt-3">
+            <div class="col-md-6 col-sm-12">
+                <div class="d-md-none mt-3"></div>
+                <select formControlName="formType" class="form-control" id="formType" name="formType">
+                    <option value="entry">entry</option>
+                    <option value="flexed">flexed</option>
+                </select>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="d-md-none mt-3"></div>
+                <select formControlName="author" class="form-control" id="author" name="author">
+                    <option value="">Author</option>
+                    <option *ngFor="let auth of authors" [value]="auth.label">{{auth.label}} - {{auth.count}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap mt-3">
+            <div class="col-md-6 col-sm-12">
+                <div class="d-md-none mt-3"></div>
+                <select formControlName="lang" class="form-control" id="lang" name="lang">
+                    <option value="">Language</option>
+                    <option *ngFor="let lang of languages" [value]="lang.label">{{lang.label}} - {{lang.count}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="d-md-none mt-3"></div>
+                <select formControlName="status" class="form-control" id="status" name="status">
+                    <option value="">Status</option>
+                    <option value="working">working</option>
+                    <option value="completed">completed</option>
+                    <option value="reviewed">reviewed</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- INFINITE SCROLL AND TREE VIEW -->
+<div class="col-md-12 mt-3 rounded border border-secondary tree-view" infiniteScroll [infiniteScrollDistance]="0.4"
+    [infiniteScrollThrottle]="150" [infiniteScrollContainer]="'.search-results'" [fromRoot]="true"
+    (scrolled)="onScrollDown(lexicalEntry.treeModel)" style="height: calc(100vh - 19rem); overflow-x: auto;">
+
+    <div id="lazyLoadingModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <p class="mx-3" *ngIf="show">Nessun risultato</p>
+    <tree-root #lexicalEntry [(state)]="state" [nodes]="nodes" [options]="options" [focused]="true"
+        (activate)="onEvent($event)" (deactivate)="onEvent($event)" class="lexicalEntryTree">
+        
+        <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+            <div class="node-wrapper"  style="justify-content: space-between; padding: 0px 15px;" > <!-- [style.padding-left]="node.getNodePadding()" -->
+                <div>
+                    <tree-node-expander [node]="node" *ngIf="node.data.hasChildren == true"></tree-node-expander>
+                    <div class="node-content-wrapper" [class.node-content-wrapper-active]="node.isActive"
+                        [class.node-content-wrapper-focused]="node.isFocused" (click)="node.mouseAction('click', $event)"
+                        (dblclick)="node.mouseAction('dblClick', $event)" [contextMenu]="basicMenu" [contextMenuSubject]="node.data">
+    
+                        <span
+                            *ngIf="node.data.count == undefined && labelView && node.data.componentInstanceName == undefined && node.data.definition == undefined && node.data.type!='canonicalForm' && node.data.sense == undefined">{{
+                            node.data.label }}</span>
+                        <span
+                            *ngIf="node.data.count == undefined && idView && node.data.definition == undefined && node.data.type!='canonicalForm' && node.data.sense == undefined && node.data.etymologyInstanceName == undefined">{{
+                            node.data.lexicalEntryInstanceName }}</span>
+    
+                        <span
+                            *ngIf="node.data.count == undefined && labelView && node.data.definition == undefined && node.data.type=='canonicalForm' && node.data.sense == undefined"><b>{{
+                                node.data.label }}</b></span>
+                        <span
+                            *ngIf="node.data.count == undefined && idView && node.data.definition == undefined && node.data.type=='canonicalForm' && node.data.sense == undefined"><b>{{
+                                node.data.formInstanceName }}</b></span>
+                        <span
+                            *ngIf="node.data.count == undefined && idView && node.data.definition == undefined && node.data.type!='canonicalForm' && node.data.sense == undefined">{{
+                            node.data.formInstanceName }}</span>
+                        <span *ngIf="node.data.count == undefined && idView && node.data.definition != undefined">{{
+                            node.data.senseInstanceName }}</span>
+
+                        <span *ngIf="node.data.count == undefined && idView && node.data.etymologyInstanceName != undefined">{{
+                            node.data.etymologyInstanceName }}</span>
+
+                        <span *ngIf="node.data.count == undefined && labelView && node.data.componentInstanceName != undefined && node.data.label == ''">
+                           Anonimous component</span>
+
+                        <span *ngIf="node.data.count == undefined && labelView && node.data.componentInstanceName != undefined && node.data.label != ''">
+                            {{node.data.label}}</span>
+                        
+                        <span *ngIf="node.data.count == undefined && idView && node.data.componentInstanceName != undefined">
+                            {{node.data.componentInstanceName}}</span>
+    
+                        <span class="lexical-tooltip"
+                            *ngIf="node.data.count == undefined && labelView && node.data.definition != undefined && node.data.label != undefined"
+                            data-toggle="tooltip" data-html="true" [title]="node.data.definition">{{node.data.label.length >
+                            10 ? (node.data.label | slice:0:10) +'...' : node.data.label}}</span>
+                        <span class="lexical-tooltip"
+                            *ngIf="node.data.count == undefined && idView && node.data.definition != undefined && node.data.label != undefined"
+                            data-toggle="tooltip" data-html="true" [title]="node.data.definition">{{ node.data.instanceName
+                            }}</span>
+    
+                        <span *ngIf="node.data.count != undefined"><i><span
+                                    style="color: #6e6e6e">{{node.data.label}}</span></i>&nbsp;({{ node.data.count
+                            }})</span>
+                        <span *ngIf="node.data.writtenRep != ''">{{ node.data.writtenRep }}</span>
+                        <sub *ngIf="labelView && node.data.sense == undefined">{{node.data.pos}}</sub>
+                        <span *ngIf="node.data.language != null && labelView" class="lang">@{{node.data.language}}</span>
+                        <!-- <span  *ngIf="node.data.count == undefined" >
+                            {{ node.data.name }}
+                        </span> -->
+                    </div>
+                    <!-- <span *ngIf="node.data.count == undefined && node.data.definition == undefined && node.data.type!='canonicalForm' && node.data.sense == undefined && node.data.etymologyInstanceName == undefined">
+                        <button class="btn btn-outline-primary btn-sm" (click)="copyText(node.data.lexicalEntry)" style="padding: 0 0.25rem;"><i style="font-size: 12px;" class="fa fa-copy"></i></button>
+                    </span> -->
+                    
+                </div>
+                
+                <div class="icons-container">
+                    <div style="width: 30%;">
+                        <i *ngIf="node.data.note != '' && node.data.note != null"
+                            class="far fa-comment-dots note-tooltip note_{{node.data.id}}" data-toggle="tooltip"
+                            data-html="true" [title]="node.data.note"></i>
+                    </div>
+                    <div style="width: 30%;">
+                        <i *ngIf="node.data.lexicalEntryInstanceName != undefined && !flagAuthor && node.data.status == 'working'"
+                            class="fas fa-user lexical-tooltip" data-toggle="tooltip" data-html="true"
+                            [title]="node.data.creator"></i>
+
+                        <i *ngIf="node.data.lexicalEntryInstanceName != undefined && !flagAuthor && node.data.status == 'completed'"
+                            class="fas fa-user lexical-tooltip" data-toggle="tooltip" data-html="true"
+                            [title]="node.data.author"></i>
+
+                        <i *ngIf="node.data.lexicalEntryInstanceName != undefined && !flagAuthor && node.data.status == 'reviewed'"
+                            class="fas fa-user lexical-tooltip" data-toggle="tooltip" data-html="true"
+                            [title]="node.data.revisor"></i>
+
+                        <i *ngIf="node.data.formInstanceName != undefined && node.data.flagAuthor"
+                            class="fas fa-user lexical-tooltip" data-toggle="tooltip" data-html="true"
+                            [title]="node.data.creator"></i>
+                        <i *ngIf="node.data.senseInstanceName != undefined && node.data.flagAuthor"
+                            class="fas fa-user lexical-tooltip" data-toggle="tooltip" data-html="true"
+                            [title]="node.data.creator"></i>
+                            <i *ngIf="node.data.etymologyInstanceName != undefined && node.data.flagAuthor"
+                            class="fas fa-user lexical-tooltip" data-toggle="tooltip" data-html="true"
+                            [title]="node.data.creator"></i>
+                    </div>
+                    <div style="width: 30%;">
+                        <i *ngIf="node.data.status != undefined && node.data.status == 'working'" class="fa fa-circle"
+                            style="color:red;"></i>
+                        <i *ngIf="node.data.status != undefined && node.data.status == 'completed'" class="fa fa-circle"
+                            style="color:yellow;"></i>
+                        <i *ngIf="node.data.status != undefined && node.data.status == 'reviewed'"
+                            class="fa fa-circle lexical-tooltip" style="color: green;" data-toggle="tooltip"
+                            data-html="true" [title]="node.data.revisor"></i>
+                    </div>
+
+                </div>
+            </div>
+        </ng-template>
+        <context-menu>
+
+            <!-- FOLDER CONTEXT MENU -->
+            <ng-template contextMenuItem let-item (execute)="copyText($event.item)">
+              Copy URI
+            </ng-template>
+        </context-menu>
+        <ng-template #loadingTemplate let-loadingNode>
+            <div *ngIf="loadingNode.hasChildren">
+                <div class="spinner-border spinner-border-sm m-1" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </tree-root>
+
+    
+</div>

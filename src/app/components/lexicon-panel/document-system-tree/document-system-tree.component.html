@@ -1,0 +1,97 @@
+﻿
+
+<div id="tree-accordion" #accordion>
+
+
+    <!-- EPIGRAFI -->
+    <div class="card">
+        <div class="card-header" id="epigraphyHeading">
+            <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#epigraphyCollapse" aria-expanded="true"
+                    aria-controls="epigraphyCollapse">
+                    <i class="fa"></i> Text
+                </button>
+                <div class="icons-container dropdown">
+                    <button class="btn btn-link" type="button" id="textTreeActionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus"></i></button>
+                    <!-- <button class="btn btn-link"><i class="fa fa-file-import"></i></button>
+                    <button class="btn btn-link"><i class="fa fa-download"></i></button>
+                    <button class="btn btn-link" title="Language"><i class="fa fa-globe-americas"></i></button> -->
+                    <div class="dropdown-menu" aria-labelledby="textTreeActionDropdown">
+                        <a class="dropdown-item" (click)="addFile.click()" style="cursor: pointer;">Add new file</a>
+                        <input #addFile type="file" accept=".xml" hidden (change)="addNewFile($event)" multiple>
+                        <a class="dropdown-item" (click)="addNewFolder()" style="cursor: pointer;">Add new folder</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" (click)="createNewFile()" style="cursor: pointer;">Create empty file</a>
+                      </div>
+                </div>
+               
+            </h5>
+        </div>
+        <div id="epigraphyCollapse" class="collapse show" aria-labelledby="epigraphyHeading" data-parent="#tree-accordion">
+            <div class="card-body">
+                <app-text-tree #textTree></app-text-tree>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEXICAL ENTRIES -->
+    <div class="card">
+        <div class="card-header" id="lexicalHeading">
+            <h5 class="mb-0 d-flex flex-wrap justify-content-between align-items-center">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#lexicalCollapse"
+                    aria-expanded="false" aria-controls="lexicalCollapse" (click)="updateTreeParent()">
+                    <i class="fa"></i> Lessico
+                </button>
+                <div class="icons-container">
+                    <button
+                        [ngStyle]="switcher ? {'background-color': '#007bff', 'color': 'rgb(247 247 247)'} : {'background-color': 'transparent', 'color': '#007bff'}"
+                        class="btn btn-link" title="Switch to label view"
+                        (click)="switchLabel(); updateTreeParent();"><i class="fas fa-tag"></i></button>
+                    <button class="btn btn-link" title="Add new lexical entry" (click)="newLexicalEntry()"><i
+                            class="fa fa-plus"></i></button>
+                    <button class="btn btn-link" title="Export" (click)="exportLexicon();"><i class="fa fa-file-import"></i></button>
+                    <!-- <button class="btn btn-link" title="Download"><i class="fa fa-download"></i></button> -->
+                    <button class="btn btn-link" title="Edit Languages" (click)="selectLanguageModal.show(); triggerLoad();"><i
+                            class="fas fa-flag-usa"></i></button>
+
+                    <app-modal #selectLanguageModal class="languages_modal">
+                        <ng-container class="app-modal-header">Language Manager</ng-container>
+                        <ng-container class="app-modal-body">
+
+                            <app-language-manager></app-language-manager>
+
+                        </ng-container>
+                    </app-modal>
+                </div>
+            </h5>
+        </div>
+        <div id="lexicalCollapse" class="collapse" aria-labelledby="lexicalHeading" data-parent="#tree-accordion">
+            <div class="card-body">
+                <app-lexical-entry-tree #lexTree></app-lexical-entry-tree>
+            </div>
+        </div>
+    </div>
+
+    <!-- ONTOLOGY -->
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0 d-flex flex-wrap justify-content-between align-items-center">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#ontologia"
+                    aria-expanded="false" aria-controls="ontologia">
+                    <i class="fa"></i> Ontology
+                </button>
+                <!-- <div class="icons-container">
+                    <button class="btn btn-link"><i class="fa fa-plus"></i></button>
+                    <button class="btn btn-link"><i class="fa fa-file-import"></i></button>
+                    <button class="btn btn-link"><i class="fa fa-download"></i></button>
+                    <button class="btn btn-link" title="Language"><i class="fa fa-globe-americas"></i></button>
+                </div> -->
+            </h5>
+        </div>
+        <div id="ontologia" class="collapse" aria-labelledby="headingFour" data-parent="#tree-accordion">
+            <div class="card-body">
+                <app-concept-tree #conceptTree></app-concept-tree>
+            </div>
+        </div>
+    </div>
+</div>
