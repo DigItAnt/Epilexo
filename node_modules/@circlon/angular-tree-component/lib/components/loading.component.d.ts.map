@@ -1,0 +1,1 @@
+{"version":3,"file":"loading.component.d.ts","sources":["loading.component.d.ts"],"names":[],"mappings":"AAAA;AACA;;AACA;AACA;AACA;;;AACA","sourcesContent":["import { TemplateRef } from '@angular/core';\r\nimport { TreeNode } from '../models/tree-node.model';\r\nexport declare class LoadingComponent {\r\n    template: TemplateRef<any>;\r\n    node: TreeNode;\r\n}\r\n"]}

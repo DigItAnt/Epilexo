@@ -1,0 +1,1 @@
+{"version":3,"file":"tree-dragged-element.model.d.ts","sources":["tree-dragged-element.model.d.ts"],"names":[],"mappings":";AAAA;AACA;AACA;AACA;AACA;;AACA","sourcesContent":["export declare class TreeDraggedElement {\r\n    _draggedElement: any;\r\n    set(draggedElement: any): void;\r\n    get(): any;\r\n    isDragging(): boolean;\r\n}\r\n"]}
