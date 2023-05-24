@@ -1,0 +1,178 @@
+// Required
+@import "../../../../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../../../../node_modules/bootstrap/scss/mixins";
+
+.row {
+    align-items: center;
+}
+
+.showall{
+    .btn {
+        border-radius: 0.25rem;
+        padding: 0 0.75rem ;
+        font-size: 12px;
+    
+    }
+}
+
+.empty {
+
+    .btn {
+        font-size: 12px;
+    }
+}
+
+
+.leiden{
+    button{
+        font-size: 1rem;
+        padding: .375rem .75rem !important;
+    }
+}
+
+.form-control {
+    font-size: 12px;
+    height: 2rem;
+}
+
+
+.form-check-input {
+    margin-top: 0;
+}
+
+/* .card {
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 100%;
+} */
+
+#accordion {
+    width: 100%;
+}
+
+.text-id {
+    position: absolute;
+    left: 10px;
+    top: -12px;
+    background: white;
+    text-align: center;
+    color: $gray-900;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.collapse-icon {
+    position: absolute;
+    right: 4px;
+    top: -16px;
+    background: white;
+    text-align: center;
+    color: $gray-900;
+    padding: 5px 5px;
+    font-size: 16px;
+}
+
+.badge {
+    font-size: 11px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+form > div > span {
+    font-size: 14px;
+}
+
+.panel .token {
+    padding: 0px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.mark {
+    background-color: #fbff009c;
+    padding: 0.3rem 0 !important;
+}
+
+.mark_test {
+    background-color: #ff000088;
+    padding: 0.3rem 0 !important;
+}
+
+.annotation {
+    /* background-color: #00ff158e;
+    padding: 0.3rem 0 !important; */
+    border: 2px dashed cadetblue !important;
+}
+
+.annotation_entire {
+    background-color: #00ff158e;
+    padding: 0.3rem 0 !important;
+    border: 2px dashed #006a6a !important
+}
+
+/* .annotation_ultra {
+    background-color: #ff00ff8e;
+    padding: 0.3rem 0 !important;
+} */
+
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                        supported by Chrome, Edge, Opera and Firefox */
+}
+
+.panel-body .token.selected {
+    border-color: rgb(0, 89, 255);
+    border-width: 1px;
+    transition: border 0.2s ease;
+}
+
+.panel-body .token.editing {
+    border-color: rgb(0, 89, 255);
+    border-width: 1px;
+    transition: border 0.2s ease;
+}
+
+.panel-body.multiword {
+    border: 1px solid;
+    border-color: #ff7300;
+    transition: border 0.2s ease;
+    position: relative;
+}
+
+.panel-body.multiword + .panel-body.multiword {
+    border-color: #ff7300;
+    border-left: none;
+    transition: border 0.2s ease;
+    position: relative;
+}
+
+.panel-body:hover.token {
+    border-color: rgb(0, 89, 255);
+    border-width: 1px;
+    transition: border 0.2s ease;
+}
+
+div[class*="multiword-span-"]{
+    border: 1px solid;
+    border-color: #66ff00;
+}
+
+div[class*="multiword-span-"] + div[class*="multiword-span-"]{
+    border: 1px solid;
+    border-left: none;
+    border-color: #66ff00;
+}
+
+.leiden_raw {
+    font-size: 14px;
+    font-weight: 300;
+}

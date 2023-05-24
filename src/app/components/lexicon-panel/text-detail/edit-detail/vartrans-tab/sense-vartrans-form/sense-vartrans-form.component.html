@@ -1,0 +1,276 @@
+﻿
+
+<form [formGroup]="senseVartransForm" *ngIf="object!=null"> 
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Label:</label>
+        <div class="input-group col-xl-5">
+            <input formControlName="label" name="label" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+    
+    <!-- TRANSLATION -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>TRANSLATION</b></span>
+                <a class="pointer" (click)="addTranslation()"><span class="collapse-icon"><i class="fa fa-plus-square"></i></span></a>
+
+                <div class="card-body">
+                    <div formArrayName="translation">
+                        <div *ngFor="let trans of senseVartransForm.get('translation')['controls']; let i = index">
+                            <div class="form-group row ml-2 mt-3 mr-2">
+                        
+                                <label for="inputLabel" class="col-xl-3 mb-3 col-form-label ">Type:</label>
+                                <div class="input-group col-xl-5 mb-3" [formGroupName]="i">
+                                    <select class="form-control" formControlName="type" name="type">
+                                        <option>Relations...</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row ml-2 mt-3 mr-2">
+                                <label for="inputLabel" class="col-xl-3 mb-3 col-form-label ">Confidence:</label>
+                                <div class="input-group col-xl-2 mb-3" [formGroupName]="i">
+                                    <input formControlName="confidence" name="confidence" type="number" step="0.1" min="0" max="10" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row ml-2 mt-3 mr-2">
+                                <label for="inputLabel" class="col-xl-3 mb-3 col-form-label ">Target:</label>
+                                <div class="input-group col-xl-9" *ngIf="{switch : false}; let variable" [formGroupName]="i">
+                                    <ng-select formControlName="target" name="target" [items]="people" bindValue="name" bindLabel="name" placeholder="Search entity" appendTo="body"
+                                        [loading]="peopleLoading" *ngIf="!variable.switch">
+                                    </ng-select>
+                                    <input formControlName="target" name="target" type="text" class="form-control" placeholder="Insert URI" *ngIf="variable.switch">
+                                    <div class="input-group-append ml-3 form-check">
+                                        <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                                    </div>
+                                    <div class="input-group-append ml-2">
+                                        <button class="btn btn-primary" type="button" (click)="modalRoot.show()"><i
+                                                class="fa fa-external-link-alt" ></i></button>
+                                                <app-modal #modalRoot class="modal-demo" [maximizable]="true" [backdrop]="false">
+                                                    <ng-container class="app-modal-header">Demo modal</ng-container>
+                                                    <ng-container class="app-modal-body">
+                                                        <h3>MODAL DIALOG</h3>
+                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                            Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s.</p>
+                                                    </ng-container>
+                                                    <ng-container class="app-modal-footer">
+                                                        <button type="button" class="button button3" (click)="modalRoot.hide()">Delete</button>
+                                                        <button type="button" class="button button1" (click)="modalRoot.hide()">Save</button>
+                                                        <button type="button" class="button button2" style="float: right;"
+                                                            (click)="modalRoot.hide()">Close
+                                                        </button>
+                                                    </ng-container>
+                                                </app-modal>
+                                    </div>
+                                    <div class="input-group-append ml-2">
+                                        <button (click)="removeTranslation(i)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SENSE RELATION DIRECT -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>SENSE RELATION</b><span class="badge badge-primary ml-2">DIRECT</span></span>
+                <a (click)="addSenseTranslation()" class="pointer"><span class="collapse-icon"><i class="fa fa-plus-square"></i></span></a>
+
+                <div class="card-body">
+                    <div class="form-group row ml-2 mt-3 mr-2" formArrayName="senseTranslation" *ngFor="let direct of senseVartransForm.get('senseTranslation')['controls']; let i = index">
+                        <div class="col-xl-5" [formGroupName]="i">
+                            <select class="form-control" formControlName="relation" name="relation">
+                                <option>Relations...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xl-7" *ngIf="{switch : false}; let variable" [formGroupName]="i">
+                            <ng-select formControlName="entity" name="entity" [items]="people" bindValue="name" bindLabel="name" placeholder="Search entity" appendTo="body"
+                                [loading]="peopleLoading" *ngIf="!variable.switch">
+                            </ng-select>
+                            <input formControlName="entity" name="entity" type="text" class="form-control" placeholder="Insert URI" *ngIf="variable.switch">
+                            <div class="input-group-append ml-3 form-check">
+                                <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <button class="btn btn-primary" type="button"><i
+                                        class="fa fa-external-link-alt" (click)="modalRoot.show()"></i></button>
+                                <app-modal #modalRoot class="modal-demo" [maximizable]="true" [backdrop]="false">
+                                    <ng-container class="app-modal-header">Demo modal</ng-container>
+                                    <ng-container class="app-modal-body">
+                                        <h3>MODAL DIALOG</h3>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s.</p>
+                                    </ng-container>
+                                    <ng-container class="app-modal-footer">
+                                        <button type="button" class="button button3" (click)="modalRoot.hide()">Delete</button>
+                                        <button type="button" class="button button1" (click)="modalRoot.hide()">Save</button>
+                                        <button type="button" class="button button2" style="float: right;"
+                                            (click)="modalRoot.hide()">Close
+                                        </button>
+                                    </ng-container>
+                                </app-modal>
+                            </div>
+                            <div class="input-group-append ml-2">
+                                <button (click)="removeSenseTranslation(i)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- TERMINOLOGICAL RELATION INDIRECT -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>TERMINOLOGICAL RELATION</b><span class="badge badge-primary ml-2">INDIRECT</span></span>
+                <a class="pointer" (click)="addTerminologicalRelation()"><span class="collapse-icon"><i class="fa fa-plus-square"></i></span></a>
+                <div class="card-body">
+                    <div formArrayName="terminologicalRelation">
+                        <div *ngFor="let indirect of senseVartransForm['controls'].terminologicalRelation['controls']; let i = index">
+                            <div [formGroupName]="i">
+                                <div class="form-group row ml-2 mt-3 mr-2">
+                                    <div class="col-xl-3">
+                                        <input type="text" class="form-control" formControlName="a_entity" name="a_entity">
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <select class="form-control" formControlName="relation" name="relation">
+                                            <option>Relation</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group col-xl-6" *ngIf="{switch : false}; let variable">
+                                        <ng-select formControlName="b_entity" name="b_entity" [items]="people" class="resizeNgSelect" bindValue="name" bindLabel="name" placeholder="Search entity" appendTo="body"
+                                            [loading]="peopleLoading" *ngIf="!variable.switch">
+                                        </ng-select>
+                                        <input formControlName="b_entity" name="b_entity" type="text" class="form-control" placeholder="Insert URI" *ngIf="variable.switch">
+                                        <div class="input-group-append ml-3 form-check">
+                                            <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                                        </div>
+                                        <div class="input-group-append ml-2">
+                                            <button class="btn btn-primary" type="button"><i
+                                                    class="fa fa-external-link-alt"></i></button>
+                                        </div>
+                                        <div class="input-group-append ml-2">
+                                            <button (click)="removeTerminologicalRelation(i)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                                        </div>
+                                        <div class="input-group-append ml-2">
+                                            <button (click)="addTerminologicalRelationSub(i)" class="btn btn-outline-primary" type="button"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div formArrayName="sub_rel">
+                                    <div *ngFor="let sub of indirect['controls'].sub_rel['controls']; let j = index">
+                                        <div [formGroupName]="j">
+                                            <div class="form-group row ml-2 mt-3 mr-2">
+                                                <div class="col-xl-3" ></div>
+                                                <div class="col-xl-3">
+                                                    <select class="form-control" formControlName="sub_relation" name="sub_relation">
+                                                        <option>{{sub.value['sub_relation']}}</option>
+                                                        <option>...</option>
+                                                    </select>
+                                                </div>
+                                                <div class="input-group col-xl-6" *ngIf="{switch : false}; let variable">
+                                                    <ng-select formControlName="sub_entity" name="sub_entity" [items]="people" class="resizeNgSelect" bindLabel="name" bindValue="name" placeholder="Search entity" appendTo="body"
+                                                        [loading]="peopleLoading" *ngIf="!variable.switch">
+                                                    </ng-select>
+                                                    <input formControlName="sub_entity" name="sub_entity" type="text" class="form-control" id="inputDenotes" placeholder="Insert URI" *ngIf="variable.switch">
+                                                    <div class="input-group-append ml-3 form-check">
+                                                        <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                                                    </div>
+                                                    <div class="input-group-append ml-2">
+                                                        <button class="btn btn-primary" type="button"><i
+                                                                class="fa fa-external-link-alt"></i></button>
+                                                    </div>
+                                                    <div class="input-group-append ml-2">
+                                                        <button (click)="removeTerminologicalRelationSub(i, j)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+                                                    </div>
+                                                    <div class="input-group-append ml-2">
+                                                        <button  class="btn btn-outline-primary invisible" type="button"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>           
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOW INFERENCE -->
+    <!-- <div class="form-group row ml-2 mt-3 mr-2 inference">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><a data-toggle="collapse" href="#inferenceCollapse" role="button" aria-expanded="false" aria-controls="inferenceCollapse"><span class="badge badge-warning"><b style="color: white; font-size: 12px;">SHOW INFERENCE</b></span></a></span>
+                <div class="card-body">
+                    <div class="collapse" id="inferenceCollapse">
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Lexicalized Sense:</label>
+                            <div class="col-xl-9 card mt-0 p-0" style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">    
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Sense</label>
+                                </div>      
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Sense</label>
+                                </div>        
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Sense</label>
+                                </div>  
+                            </div>
+                        </div>
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Is Evoked By:</label>
+                            <div class="col-xl-9 card mt-0 p-0" style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">    
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Entry@LANG</label>
+                                </div> 
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Entry@LANG</label>
+                                </div>          
+                            </div>
+                        </div>
+
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Narrower:</label>
+                            <div class="col-xl-9 card mt-0 p-0" style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">    
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Concept</label>
+                                    <label class="col-xl-6 col-form-label">Depth</label>
+                                </div>           
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row ml-2 mr-2">
+                            <label class="col-xl-3 col-form-label">Borader:</label>
+                            <div class="col-xl-9 card mt-0 p-0" style="max-height: 10vh;overflow: auto; border: 1px solid rgba(0,0,0,.125) !important">    
+                                <div class="form-group row ml-2 mb-0 mt-0 mr-2">
+                                    <label class="col-xl-6 col-form-label">Lexical Concept</label>
+                                    <label class="col-xl-6 col-form-label">Depth</label>
+                                </div>           
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</form>
