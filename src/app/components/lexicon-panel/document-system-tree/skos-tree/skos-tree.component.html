@@ -1,0 +1,149 @@
+<form [formGroup]="skosFilterForm">
+  <div class="input-group col-md-12 mt-2 px-1">
+    <input formControlName="search_text" id="filterConcept" name="search_text" type="text" class="form-control"
+      placeholder="Search" />
+    <div class="input-group-append">
+      <span class="input-group-text loading_icon_append border-left-0" id="basic-addon2">
+        <div class="spinner-border spinner-border-sm m-1" role="status" *ngIf="searchIconSpinner">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </span>
+    </div>
+    <div id="buttons-container" class="input-group-append">
+
+      <!-- <button class="btn btn-sm btn-secondary btn-block filter-button" type="button" value="Filter" title="Filter"
+        data-toggle="collapse" data-target="#conceptFilterCollapse" aria-expanded="false"
+        aria-controls="conceptFilterCollapse"><i class="fa fa-filter"></i></button> -->
+      <button class="btn btn-sm btn-danger btn-block reset-button" type="button" value="Reset" title="Reset"
+        (click)="resetFields();" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+          class="fa fa-times"></i></button>
+      <button class="btn btn-sm btn-block counter-button" type="button"><span
+          class="font-weight-bold font-italic text-muted">{{counter}}</span></button>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap mt-3">
+
+    <div class="col-md-6 col-sm-6">
+      <div class="form-check">
+        <input formControlName="search_mode" class="form-check-input" type="radio" name="search_mode" id="startsRadio"
+          value="startsWith">
+        <label class="form-check-label" for="startsRadio">
+          Starts
+        </label>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <div class="form-check">
+        <input formControlName="search_mode" class="form-check-input" type="radio" name="search_mode" id="containsRadio"
+          value="contains">
+        <label class="form-check-label" for="containsRadio">
+          Contains
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+</form>
+
+<!-- <div class="d-flex flex-wrap mt-3 col-md-12">
+    <div class="input-group justify-content-end">
+      <div class="input-group-append">
+        <button class="btn btn-light btn-block filter-button" title="Add new child for selected node"><i
+            class="fas fa-plus 2x"></i></button>
+        <button class="btn btn-light btn-block reset-button" type="button" value="Reset"
+          title="Add new sibling for selected node"
+          style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+            class="fas fa-user-plus 2x"></i></button>
+        <button class="btn btn-light btn-block reset-button" type="button" value="Reset" title="Delete selected node"
+          style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"><i
+            class="fas fa-times-circle 2x"></i></button>
+  
+      </div>
+    </div>
+  </div> -->
+
+
+<div id="skos-tree" class="col-md-12 mt-3 rounded border border-secondary tree-view" infiniteScroll
+  [infiniteScrollDistance]="0.4" [infiniteScrollThrottle]="150" [fromRoot]="true"
+  (scrolled)="onScrollDown(skosTree.treeModel)">
+  <!-- [infiniteScrollContainer]="'.search-results'" -->
+  <p *ngIf="show">Nessun risultato</p>
+
+  <tree-root #skosTree [nodes]="skos_nodes" [options]="options" [focused]="true" (activate)="onEvent($event)"
+    (moveNode)="onMoveNode($event)">
+    <ng-template #treeNodeTemplate let-node let-index="index">
+
+      <div [contextMenu]="skosMenu" [contextMenuSubject]="node.data">
+        <span  *ngIf="node.data.conceptSet != undefined">
+          <i class="fas fa-cubes fa-lg"></i> <b class="ml-2">{{ node.data.defaultLabel.split('#')[1] == undefined ? node.data.defaultLabel : node.data.defaultLabel.split('#')[1] }} </b>
+        </span>
+  
+        <span  *ngIf="node.data.lexicalConcept != undefined">
+          <i class="fas fa-cube fa-lg"></i> <span class="font-italic ml-2">{{ node.data.defaultLabel.split('#')[1] == undefined ? node.data.defaultLabel : node.data.defaultLabel.split('#')[1] }} </span>
+        </span>
+      </div>
+     
+
+    </ng-template>
+    <ng-template #loadingTemplate let-loadingNode>
+      <div *ngIf="loadingNode.hasChildren">
+        <div class="spinner-border spinner-border-sm m-1" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
+  </tree-root>
+
+  <context-menu>
+
+    <!-- FOLDER CONTEXT MENU -->
+    
+
+    <ng-template contextMenuItem let-item [visible]="isLexicalConcept" (execute)="addLexicalConcept($event.item, 'lexicalConcept')">
+      Add Lexical Concept (child)
+    </ng-template>
+
+
+    <ng-template contextMenuItem let-item [visible]="isLexicalConcept" (execute)="deleteLexicalConcept($event.item)">
+      Delete Lexical Concept
+
+     
+    </ng-template>
+    
+  </context-menu>
+</div>
+
+
+<ng-template #lexicalConceptRemoverModal let-modal *ngIf="nodeToRemove != null">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.close('')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    You want to delete only {{nodeToRemove.defaultLabel}} or ALL their children?
+
+    <form [formGroup]="processRequestForm">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="oneOrAll" id="onlyOne" value="one" checked>
+        <label class="form-check-label" for="onlyOne">
+          Delete only {{nodeToRemove.defaultLabel}}
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="oneOrAll" id="allChildren" value="all">
+        <label class="form-check-label" for="allChildren">
+          Delete {{nodeToRemove.defaultLabel}} and all their children
+        </label>
+      </div>
+    </form>
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="processRequest(); modal.close()">Yes</button>
+  </div>
+</ng-template>

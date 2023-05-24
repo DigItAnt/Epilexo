@@ -1,0 +1,256 @@
+﻿
+
+<form [formGroup]="etyForm" *ngIf="object != null"> <!-- *ngIf="object!=null" -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Label:</label>
+        <div class="input-group col-xl-7">
+            <input formControlName="label" name="label" type="text" class="form-control" placeholder="">
+            <div class="input-group-append">
+                <div class="input-group-append ml-2">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary" type="button" (click)="addNewEtyLink()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" (click)="addCognate()" style="cursor: pointer;">Add Cognates</a>
+                          <a class="dropdown-item"  style="cursor: pointer;">Add EtyLink</a>
+                        </div> -->
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Author: </label>
+        <div class="input-group col-xl-7">
+            <input formControlName="author" name="author" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Uncertain:</label>
+        <div class="input-group col-xl-7">
+            <input formControlName="confidence" name="confidence" type="checkbox" > <!-- [checked]="etyForm.get('confidence').value == 0" -->
+        </div>
+    </div>
+
+    <!-- ETY LINK -->
+    <div formArrayName="etylink">
+        <div *ngFor="let etyLink of etyForm['controls'].etylink['controls']; let i = index">
+            <div [formGroupName]="i">
+                <div class="form-group row ml-2 mt-3 mr-2">
+                    <div class="input-group col-xl-12">
+                        <div class="card">
+                            <span class="text-id"><b>ETY LINK {{i+1}}</b></span>
+                            <!-- <a class="pointer" (click)="addRelation(i)"><span class="add-icon"><i class="fa fa-plus-square"></i></span></a> -->
+                            <a class="pointer" (click)="removeEtyLink(i)"><span class="trash-icon"><i class="fa fa-trash"></i></span></a>
+                            <div class="card-body" *ngIf="{external : etyLink.get('external_iri').value }; let variable">
+
+                                <!-- ETYMON / LEXENT -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex" style="align-items: center;">
+                                        <label class="col-xl-3 col-form-label">Etymon:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mt-3 mr-2">
+                                                <div class="input-group" >
+                                                    <ng-select *ngIf="!etyLink.get('lila').value && !variable.external" #etyLink [addTag]="createNewEtymon" (change)="onChangeEtylink(etyLink, i)" formControlName="lex_entity" name="lex_entity" [items]="searchResults" class="resizeNgSelect" bindLabel="label" bindValue="label" placeholder="Search entity" appendTo="body"
+                                                         (keyup)="triggerEtylink($event, i)" bindValue="label" class="resizeNgSelect" [items]="searchResults"
+                                                        bindLabel="label" placeholder="Search entity" appendTo="body" (focus)="deleteData()">
+                                                    </ng-select>
+                                                    <ng-select *ngIf="etyLink.get('lila').value && !variable.external" #etyLink  [addTag]="false" (change)="onChangeEtylink(etyLink, i)" formControlName="lex_entity" name="lex_entity" [items]="searchResults" class="resizeNgSelect" bindLabel="label" bindValue="label" placeholder="Search entity" appendTo="body"
+                                                         (keyup)="triggerEtylink($event, i)" bindValue="label" class="resizeNgSelect" [items]="searchResults"
+                                                        bindLabel="label" placeholder="Search entity" appendTo="body" (focus)="deleteData()">
+                                                    </ng-select>
+                                                    <input (keyup)="triggerEtylinkInput($event, i)" formControlName="lex_entity" name="lex_entity" type="text" class="form-control" id="inputDenotes" placeholder="Insert URI" *ngIf="variable.external">
+                                                   
+                                                    <div class="input-group-append ml-2" *ngIf="!variable.external ">
+                                                        <div class="btn-group-toggle" data-toggle="buttons" placement="top" ngbTooltip="Enable LiLa endpoint" title="Enable LiLa endpoint" >
+                                                            <label class="btn btn-secondary" >
+                                                              <input type="checkbox" autocomplete="off" autocomplete="off" formControlName="lila" name="lila" style="border-radius: .3rem;" > 
+                                                                <!-- <img src="../../../../../../../assets/images/graphql.png" alt="Avatar" class="image" style="height: 20px;"> -->
+                                                                <i class="fas fa-project-diagram"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group-append ml-2" *ngIf="etyLink.get('external_iri').value && etyLink.get('etySource').value != ''">
+                                                        <a [href]="etyLink.get('etySource').value" target="_blank" class="btn btn-primary" type="button"><i
+                                                                class="fa fa-external-link-alt"></i></a>
+                                                    </div>
+                                                    <div class="input-group-append ml-3 form-check">
+                                                        <input class="form-check-input vartrans-tooltip" formControlName="external_iri" name="external_iri" type="checkbox" (change)="variable.external=!variable.external;" container="body" placement="top" ngbTooltip="Insert URL manually" title="Clicca per inserire un URI manualmente">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- LABEL / WRITTEN FORM -->
+                                <div class="col-xl-12" *ngIf="variable.external">
+                                    <div class="d-xl-flex">
+                                        <label class="col-xl-3 col-form-label">Label:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    
+                                                    <input (keyup)="debounceEtylinkLabel($event, i)" formControlName="label" name="label" type="text" class="form-control">
+                                                    <div class="input-group-append ml-3 form-check invisible">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ETYLINK TYPE -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex">
+                                        <label class="col-xl-3 col-form-label">EtyLink Type:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    <select id="typeSelect" formControlName="etyLinkType" name="etyLinkType" class="form-control" (change)="onChangeEtylinkType(i, $event)">
+                                                        <option [selected]="etyLink.get('etyLinkType').value == 'inheritance'" value="inheritance">
+                                                            inheritance
+                                                        </option>
+                                                        <option [selected]="etyLink.get('etyLinkType').value == 'borrowing'" value="borrowing">
+                                                            borrowing
+                                                        </option>
+                                                    </select>
+                                                    <!-- <input formControlName="etyLinkType" name="etyLinkType" type="text" class="form-control"> -->
+                                                    <div class="input-group-append ml-3 form-check invisible">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ETY SOURCE -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex">
+                                        <label class="col-xl-3 col-form-label text-muted">EtySource:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    
+                                                    <input formControlName="etySource" name="etySource" type="text" class="form-control" readonly>
+                                                    <div class="input-group-append ml-3 form-check invisible">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ETY TARGET -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex">
+                                        <label class="col-xl-3 col-form-label text-muted">EtyTarget:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    
+                                                    <input formControlName="etyTarget" name="etyTarget" type="text" class="form-control" readonly>
+                                                    <div class="input-group-append ml-3 form-check invisible">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>   
+
+                                <!-- NOTE -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex">
+                                        <label class="col-xl-3 col-form-label">Note:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    
+                                                    <textarea (keyup)="debounceEtylinkNote($event, i)" formControlName="note" name="note" type="text" class="form-control" style="resize: none;"></textarea>
+                                                    <div class="input-group-append ml-3 form-check invisible" >
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- COGNATES -->
+    <div formArrayName="cognates">
+        <div *ngFor="let sub of etyForm['controls'].cognates['controls']; let i = index">
+            <div [formGroupName]="i">
+                <div class="form-group row ml-2 mt-3 mr-2">
+                    <div class="input-group col-xl-12">
+                        <div class="card">
+                            <span class="text-id"><b>COGNATE {{i+1}}</b></span>
+                            <!-- <a class="pointer" (click)="addSubtermElement(i)"><span class="add-icon"><i class="fa fa-plus-square"></i></span></a> -->
+                            <a class="pointer" (click)="removeCognate(i)"><span class="trash-icon"><i class="fa fa-trash"></i></span></a>
+                            <div class="card-body">
+
+                                <!-- COGNATE -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex" style="align-items: center;">
+                                        <label class="col-xl-3 col-form-label">Cognate:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mt-3 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    <ng-select formControlName="cognate" name="cognate" [items]="searchResults" class="resizeNgSelect" bindLabel="label" bindValue="label" placeholder="Search entity" appendTo="body"
+                                                         *ngIf="!variable.switch" (keyup)="triggerCognates($event)" bindValue="label" class="resizeNgSelect" [items]="searchResults"
+                                                        bindLabel="label" placeholder="Search entity" appendTo="body" (focus)="deleteData()">
+                                                    </ng-select>
+                                                    <input (keyup)="triggerCognatesInput($event, i)" formControlName="cognate" name="cognate" type="text" class="form-control" id="inputDenotes" placeholder="Insert URI" *ngIf="variable.switch">
+                                                    <div class="input-group-append ml-3 form-check">
+                                                        <input class="form-check-input vartrans-tooltip" type="checkbox" (change)="variable.switch=!variable.switch" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" title="Clicca per inserire un URI manualmente">
+                                                    </div>
+                                                    <!-- <div class="input-group-append ml-2">
+                                                        <button class="btn btn-primary" type="button"><i
+                                                                class="fa fa-external-link-alt"></i></button>
+                                                    </div> -->
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- LABEL / WRITTEN FORM -->
+                                <div class="col-xl-12">
+                                    <div class="d-xl-flex">
+                                        <label class="col-xl-3 col-form-label">Label / Written Form:</label>
+                                        <div class="col-xl-9">
+                                            <div class="form-group row ml-2 mr-2">
+                                                <div class="input-group" *ngIf="{switch : false}; let variable">
+                                                    
+                                                    <input formControlName="label" name="label" type="text" class="form-control">
+                                                    <div class="input-group-append ml-3 form-check invisible">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                                                  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

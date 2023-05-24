@@ -1,0 +1,30 @@
+// Required
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+
+
+$font-size: 18px;
+$font-size-arrow: 14px;
+
+@include media-breakpoint-up(lg) { 
+    nav {
+        height: 5vh;
+    }
+}
+
+nav {
+    font-size: $font-size;
+}
+
+.dropdown-menu{
+    left: -90px;
+}
+
+.dropdown-toggle::after {
+    font-size: 14px;
+}
+
+.pointer {
+    cursor: pointer;
+}

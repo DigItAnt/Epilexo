@@ -1,0 +1,102 @@
+﻿
+
+<form [formGroup]="lexicalConceptForm" *ngIf="object!=null">
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Pref label:</label>
+        <div class="input-group col-xl-7">
+            <input formControlName="defaultLabel" name="defaultLabel" type="text" class="form-control" placeholder="">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2" style="font-size: .75rem; font-weight: 900;">@{{object.language}}</span>
+            </div>
+        </div>
+    </div>    
+
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <label for="inputLabel" class="col-xl-3 col-form-label">Definition:</label>
+        <div class="input-group col-xl-8">
+            <textarea formControlName="definition" name="definition" class="form-control" style="resize: none;"></textarea>
+        </div>
+    </div>
+
+
+    <!-- IS EVOKED BY -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>IS EVOKED BY</b></span>
+                <a class="pointer" [ngClass]="{no_pointer: disableAddIsEvokedBy}" (click)="addIsEvokedBy()"><span class="collapse-icon"><i
+                    class="fa fa-plus-square"></i></span></a>
+
+                <div class="card-body">
+                    <div class="form-group row ml-2 mt-3 mr-2" formArrayName="isEvokedBy" *ngFor="let isEvoked of lexicalConceptForm.get('isEvokedBy')['controls']; let i = index">
+                        
+                        <div class="input-group col-xl-12" [formGroupName]="i">
+                            
+                            <ng-select #select_evokedby formControlName="label" name="label" [items]="searchResults" 
+                                (keyup)="triggerIsEvokedBy($event, i)" (change)="handleIsEvokedBy(select_evokedby, i)"
+                                [searchable]="!isEvoked.get('inferred').value"
+                                bindValue="label" bindLabel="label" placeholder="Search entity" appendTo="body" [clearable]="false"
+                                >
+                                
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div>
+                                        <span>{{item.label}} </span><span style="color: blue;">@{{item.language}}</span>
+                                    </div>
+
+                                </ng-template>
+                            </ng-select>
+                            
+                            
+                            <div class="input-group-append ml-2">
+                                <button (click)="removeIsEvokedBy(i)" class="btn btn-danger" type="button" *ngIf="!isEvoked.get('inferred').value"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- LEXICALIZED SENSES -->
+    <div class="form-group row ml-2 mt-3 mr-2">
+        <div class="input-group col-xl-12">
+            <div class="card">
+                <span class="text-id"><b>LEXICALIZED SENSES</b></span>
+                <a class="pointer" [ngClass]="{no_pointer: disableAddLexicalizedSense}" (click)="addLexicalizedSense()"><span class="collapse-icon"><i
+                    class="fa fa-plus-square"></i></span></a>
+
+                <div class="card-body">
+                    <div class="form-group row ml-2 mt-3 mr-2" formArrayName="lexicalizedSenses" *ngFor="let lexicalizedSense of lexicalConceptForm.get('lexicalizedSenses')['controls']; let i = index">
+                        
+                        <div class="input-group col-xl-12" [formGroupName]="i">
+                            
+                            <ng-select #select_lexicalizedSense formControlName="label" name="label" [items]="searchResultsSenses" 
+                                (keyup)="triggerLexicalizedSense($event, i)" (change)="handleLexicalizedSense(select_lexicalizedSense, i)"
+                                [searchable]="!lexicalizedSense.get('inferred').value"
+                                bindValue="lemma" bindLabel="lemma" placeholder="Search entity" appendTo="body" [clearable]="false"
+                                >
+                                
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div>
+                                        <span>{{item.lemma}} </span><br>
+                                        <sub style="color: blue;">@{{item.label}}</sub>
+                                    </div>
+
+                                </ng-template>
+                            </ng-select>
+                            
+                            
+                            <div class="input-group-append ml-2">
+                                <button (click)="removeLexicalizedSense(i)" class="btn btn-danger" type="button" *ngIf="!lexicalizedSense.get('inferred').value"><i
+                                        class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

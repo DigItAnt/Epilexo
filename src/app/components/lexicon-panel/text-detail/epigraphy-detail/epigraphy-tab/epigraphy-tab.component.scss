@@ -1,0 +1,68 @@
+// Required
+@import "../../../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../../../node_modules/bootstrap/scss/mixins";
+
+$font-size: 12px;
+
+$font-size-h5: 16px; 
+$font-size-p: 12px;
+
+h5 {
+    font-size: $font-size-h5;
+}
+
+p {
+    font-size: $font-size-p;
+}
+
+.card,
+.btn {
+    font-size: $font-size;
+}
+
+.card-header {
+    padding:0;
+    background-color: $gray-300;
+}
+
+.card-footer  {
+    background-color: $gray-300;
+}
+
+.card-body {
+    max-height: calc(50vh - 13rem);
+    min-height: calc(50vh - 13rem);
+    overflow: auto;
+}
+
+.remove_element_modal{
+
+    .card-body {
+        max-height: unset !important;
+        min-height: unset !important;
+    }
+    
+}
+
+.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+}
+
+.dropdown-item {
+    font-size: 12px;
+}
+.nav-link
+
+.xml-icon {
+    max-height: 25px;
+    overflow: hidden;
+}
+
+.text-preview {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+

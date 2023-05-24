@@ -1,0 +1,8 @@
+
+<app-modal #cognatePanelModal style="top: 10%;" class="modal-demo" [maximizable]="false" [inViewport]="true"  [backdrop]="false" class="panelFormData" (closeModal)="onCloseModal(cogInstanceName, lexicalEntryId)">
+    <ng-container class="app-modal-header">{{label}}</ng-container>
+    <ng-container class="app-modal-body">
+       <app-lexical-entry-core-form [lexData]="lexicalEntryData"></app-lexical-entry-core-form>
+    </ng-container>
+    
+</app-modal>

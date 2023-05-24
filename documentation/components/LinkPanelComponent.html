@@ -1,0 +1,952 @@
+﻿/*
+  © Copyright 2021-2022  Istituto di Linguistica Computazionale "A. Zampolli", Consiglio Nazionale delle Ricerche, Pisa, Italy.
+ 
+This file is part of EpiLexo.
+
+EpiLexo is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+EpiLexo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with EpiLexo. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>lex-o-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">lex-o-angular documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  LinkPanelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/link-panel/link-panel.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-link-panel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./link-panel.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./link-panel.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#counterElement" >counterElement</a>
+                            </li>
+                            <li>
+                                <a href="#object" >object</a>
+                            </li>
+                            <li>
+                                <a href="#sameAsData" >sameAsData</a>
+                            </li>
+                            <li>
+                                <a href="#seeAlsoData" >seeAlsoData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#refreshCounter" >refreshCounter</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#linkData" >linkData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(lexicalService: <a href="../injectables/LexicalEntriesService.html" target="_self">LexicalEntriesService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:16</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>lexicalService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LexicalEntriesService.html" target="_self" >LexicalEntriesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="linkData"></a>
+                        <b>linkData</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[] | any</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:11</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:22</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="19"
+                            class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:19</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshCounter"></a>
+                    <span class="name">
+                        <span ><b>refreshCounter</b></span>
+                        <a href="#refreshCounter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshCounter(evt?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="217"
+                            class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:217</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>evt</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="counterElement"></a>
+                    <span class="name">
+                        <span ><b>counterElement</b></span>
+                        <a href="#counterElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="object"></a>
+                    <span class="name">
+                        <span ><b>object</b></span>
+                        <a href="#object"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sameAsData"></a>
+                    <span class="name">
+                        <span ><b>sameAsData</b></span>
+                        <a href="#sameAsData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="seeAlsoData"></a>
+                    <span class="name">
+                        <span ><b>seeAlsoData</b></span>
+                        <a href="#seeAlsoData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/link-panel/link-panel.component.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, OnInit, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { LexicalEntriesService } from &#x27;src/app/services/lexical-entries/lexical-entries.service&#x27;;
+
+@Component({
+  selector: &#x27;app-link-panel&#x27;,
+  templateUrl: &#x27;./link-panel.component.html&#x27;,
+  styleUrls: [&#x27;./link-panel.component.scss&#x27;]
+})
+export class LinkPanelComponent implements OnInit {
+
+  @Input() linkData: any[] | any;
+  
+  seeAlsoData : {};
+  sameAsData : {};
+  counterElement &#x3D; 0;
+  object : any;
+  constructor(private lexicalService: LexicalEntriesService) { }
+
+  ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.linkData.currentValue !&#x3D; null){
+      this.counterElement &#x3D; 0;
+      this.object &#x3D; changes.linkData.currentValue;
+      this.sameAsData &#x3D; null;
+      this.seeAlsoData &#x3D; null;
+      
+      /* //console.log(changes.linkData.currentValue) */
+
+      if(this.object.lexicalEntryInstanceName !&#x3D; undefined){
+        let lexId &#x3D; this.object.lexicalEntryInstanceName;
+        this.lexicalService.getLexEntryLinguisticRelation(lexId, &#x27;sameAs&#x27;).subscribe(
+          data&#x3D;&gt;{
+            //console.log(data);
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; data;
+            this.sameAsData[&#x27;parentNodeLabel&#x27;]&#x3D; this.object[&#x27;lexicalEntry&#x27;];
+            this.sameAsData[&#x27;lexicalEntryInstanceName&#x27;]&#x3D; this.object[&#x27;lexicalEntryInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; [];
+            this.sameAsData[&#x27;parentNodeLabel&#x27;]&#x3D; this.object[&#x27;lexicalEntry&#x27;];
+            this.sameAsData[&#x27;lexicalEntryInstanceName&#x27;]&#x3D; this.object[&#x27;lexicalEntryInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        this.lexicalService.getLexEntryLinguisticRelation(lexId, &#x27;seeAlso&#x27;).subscribe(
+          data&#x3D;&gt;{
+            console.log(data)
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; data;
+            this.seeAlsoData[&#x27;parentNodeLabel&#x27;]&#x3D; this.object[&#x27;lexicalEntry&#x27;];
+            this.seeAlsoData[&#x27;lexicalEntryInstanceName&#x27;]&#x3D; this.object[&#x27;lexicalEntryInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; [];
+            this.seeAlsoData[&#x27;parentNodeLabel&#x27;]&#x3D; this.object[&#x27;lexicalEntry&#x27;];
+            this.seeAlsoData[&#x27;lexicalEntryInstanceName&#x27;]&#x3D; this.object[&#x27;lexicalEntryInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        //console.log(this.object)
+        this.object.links.forEach(element &#x3D;&gt; {
+          if(element.type !&#x3D; undefined){
+            if(element.type &#x3D;&#x3D; &#x27;Reference&#x27;){
+              element.elements.forEach(sub &#x3D;&gt; {
+                this.counterElement +&#x3D; sub.count;
+              });
+            }
+          }
+        });
+      }else if(this.object.formInstanceName !&#x3D; undefined){
+        let formId &#x3D; this.object.formInstanceName;
+        this.lexicalService.getLexEntryLinguisticRelation(formId, &#x27;sameAs&#x27;).subscribe(
+          data&#x3D;&gt;{
+            //console.log(data);
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; data;
+            this.sameAsData[&#x27;formInstanceName&#x27;]&#x3D; this.object[&#x27;formInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; [];
+            this.sameAsData[&#x27;formInstanceName&#x27;]&#x3D; this.object[&#x27;formInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        this.lexicalService.getLexEntryLinguisticRelation(formId, &#x27;seeAlso&#x27;).subscribe(
+          data&#x3D;&gt;{
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; data;
+            this.seeAlsoData[&#x27;formInstanceName&#x27;]&#x3D; this.object[&#x27;formInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; [];
+            this.seeAlsoData[&#x27;formInstanceName&#x27;]&#x3D; this.object[&#x27;formInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        //console.log(this.object)
+        if(this.object.links !&#x3D; null){
+          this.object.links.forEach(element &#x3D;&gt; {
+            if(element.type !&#x3D; undefined){
+              if(element.type &#x3D;&#x3D; &#x27;Reference&#x27;){
+                element.elements.forEach(sub &#x3D;&gt; {
+                  this.counterElement +&#x3D; sub.count;
+                });
+              }
+            }
+          });
+        }
+        
+      }else if(this.object.senseInstanceName !&#x3D; undefined){
+        let senseId &#x3D; this.object.senseInstanceName;
+        this.lexicalService.getLexEntryLinguisticRelation(senseId, &#x27;sameAs&#x27;).subscribe(
+          data&#x3D;&gt;{
+            //console.log(data);
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; data;
+            this.sameAsData[&#x27;senseInstanceName&#x27;]&#x3D; this.object[&#x27;senseInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; [];
+            this.sameAsData[&#x27;senseInstanceName&#x27;]&#x3D; this.object[&#x27;senseInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        this.lexicalService.getLexEntryLinguisticRelation(senseId, &#x27;seeAlso&#x27;).subscribe(
+          data&#x3D;&gt;{
+            //console.log(data)
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; data;
+            this.seeAlsoData[&#x27;senseInstanceName&#x27;]&#x3D; this.object[&#x27;senseInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; [];
+            this.seeAlsoData[&#x27;senseInstanceName&#x27;]&#x3D; this.object[&#x27;senseInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        //console.log(this.object)
+        if(this.object.links !&#x3D; null){
+          this.object.links.forEach(element &#x3D;&gt; {
+            if(element.type !&#x3D; undefined){
+              if(element.type &#x3D;&#x3D; &#x27;Reference&#x27;){
+                element.elements.forEach(sub &#x3D;&gt; {
+                  this.counterElement +&#x3D; sub.count;
+                });
+              }
+            }
+          });
+        }
+      }else if(this.object.etymologyInstanceName !&#x3D; undefined){
+        let etymId &#x3D; this.object.etymologyInstanceName;
+        this.lexicalService.getLexEntryLinguisticRelation(etymId, &#x27;sameAs&#x27;).subscribe(
+          data&#x3D;&gt;{
+            //console.log(data);
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; data;
+            this.sameAsData[&#x27;etymologyInstanceName&#x27;]&#x3D; this.object[&#x27;etymologyInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.sameAsData &#x3D; {}
+            this.sameAsData[&#x27;array&#x27;] &#x3D; [];
+            this.sameAsData[&#x27;etymologyInstanceName&#x27;]&#x3D; this.object[&#x27;etymologyInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        this.lexicalService.getLexEntryLinguisticRelation(etymId, &#x27;seeAlso&#x27;).subscribe(
+          data&#x3D;&gt;{
+            //console.log(data)
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; data;
+            this.seeAlsoData[&#x27;etymologyInstanceName&#x27;]&#x3D; this.object[&#x27;etymologyInstanceName&#x27;];
+          }, error&#x3D;&gt;{
+            this.seeAlsoData &#x3D; {}
+            this.seeAlsoData[&#x27;array&#x27;] &#x3D; [];
+            this.seeAlsoData[&#x27;etymologyInstanceName&#x27;]&#x3D; this.object[&#x27;etymologyInstanceName&#x27;];
+            //console.log(error);
+            
+          }
+        )
+
+        //console.log(this.object)
+        if(this.object.links !&#x3D; null){
+          this.object.links.forEach(element &#x3D;&gt; {
+            if(element.type !&#x3D; undefined){
+              if(element.type &#x3D;&#x3D; &#x27;Reference&#x27;){
+                element.elements.forEach(sub &#x3D;&gt; {
+                  this.counterElement +&#x3D; sub.count;
+                });
+              }
+            }
+          });
+        }
+      }  
+    }else{
+      this.counterElement &#x3D; 0;
+      this.sameAsData &#x3D; null;
+      this.seeAlsoData &#x3D; null;
+    }
+  }
+
+  refreshCounter(evt?){
+    this.counterElement &#x3D; evt;
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;referenceHeading&quot;&gt;
+        &lt;h5 class&#x3D;&quot;mb-0&quot;&gt;
+            &lt;a class&#x3D;&quot;btn btn-link w-100 d-flex align-self-center collapsed&quot; data-toggle&#x3D;&quot;collapse&quot;
+                data-target&#x3D;&quot;#referenceCollapse&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;referenceCollapse&quot;&gt;
+                Link Panel&amp;nbsp; &lt;span *ngIf&#x3D;&quot;counterElement &gt; 0&quot;&gt;({{counterElement}})&lt;/span&gt;&lt;i class&#x3D;&quot;fa  ml-auto&quot;&gt;&lt;/i&gt;
+            &lt;/a&gt;
+        &lt;/h5&gt;
+    &lt;/div&gt;
+    &lt;div id&#x3D;&quot;referenceCollapse&quot; class&#x3D;&quot;collapse&quot; aria-labelledby&#x3D;&quot;referenceHeading&quot;&gt;
+        &lt;div class&#x3D;&quot;card-body&quot;&gt;
+            &lt;app-see-also (countRefresh)&#x3D;&quot;refreshCounter($event)&quot; *ngIf&#x3D;&quot;seeAlsoData !&#x3D; undefined&quot; [seeAlsoData]&#x3D;&quot;seeAlsoData&quot;&gt;&lt;/app-see-also&gt;
+            &lt;app-same-as *ngIf&#x3D;&quot;sameAsData !&#x3D; undefined&quot;  [sameAsData]&#x3D;&quot;sameAsData&quot;&gt;&lt;/app-same-as&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./link-panel.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">$font-size: 12px;
+
+.card,
+.btn {
+    font-size: $font-size;
+}
+
+.card-header {
+    padding: 5px 18px;
+}
+
+//minus
+[data-toggle&#x3D;&quot;collapse&quot;] i:before{
+    content: &quot;\f146&quot;;
+}
+
+//plus
+[data-toggle&#x3D;&quot;collapse&quot;].collapsed i:before{
+    content: &quot;\f0fe&quot;;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.fa {
+    margin-top: 2px;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="card">    <div class="card-header" id="referenceHeading">        <h5 class="mb-0">            <a class="btn btn-link w-100 d-flex align-self-center collapsed" data-toggle="collapse"                data-target="#referenceCollapse" aria-expanded="true" aria-controls="referenceCollapse">                Link Panel&nbsp; <span *ngIf="counterElement > 0">({{counterElement}})</span><i class="fa  ml-auto"></i>            </a>        </h5>    </div>    <div id="referenceCollapse" class="collapse" aria-labelledby="referenceHeading">        <div class="card-body">            <app-see-also (countRefresh)="refreshCounter($event)" *ngIf="seeAlsoData != undefined" [seeAlsoData]="seeAlsoData"></app-see-also>            <app-same-as *ngIf="sameAsData != undefined"  [sameAsData]="sameAsData"></app-same-as>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AttestationPanelComponent', 'selector': 'app-attestation-panel'},{'name': 'BibliographyPanelComponent', 'selector': 'app-bibliography-panel'},{'name': 'CoreTabComponent', 'selector': 'app-core-tab'},{'name': 'DataSearchFormComponent', 'selector': 'app-data-search-form'},{'name': 'DecompositionTabComponent', 'selector': 'app-decomposition-tab'},{'name': 'DictionaryTabComponent', 'selector': 'app-dictionary-tab'},{'name': 'DocumentSystemTreeComponent', 'selector': 'app-document-system-tree'},{'name': 'EditDetailComponent', 'selector': 'app-edit-detail'},{'name': 'EpidocTabComponent', 'selector': 'app-epidoc-tab'},{'name': 'EpigraphyDetailComponent', 'selector': 'app-epigraphy-detail'},{'name': 'EpigraphyTabComponent', 'selector': 'app-epigraphy-tab'},{'name': 'EtymologyFormComponent', 'selector': 'app-etymology-form'},{'name': 'EtymologyTabComponent', 'selector': 'app-etymology-tab'},{'name': 'FileTabComponent', 'selector': 'app-file-tab'},{'name': 'FormCoreFormComponent', 'selector': 'app-form-core-form'},{'name': 'FormTabComponent', 'selector': 'app-form-tab'},{'name': 'FrameTabComponent', 'selector': 'app-frame-tab'},{'name': 'HomePageComponent', 'selector': 'app-home-page'},{'name': 'LanguageManagerComponent', 'selector': 'app-language-manager'},{'name': 'LexicalConceptFormComponent', 'selector': 'app-lexical-concept-form'},{'name': 'LexicalEntryCoreFormComponent', 'selector': 'app-lexical-entry-core-form'},{'name': 'LexicalEntryDecompFormComponent', 'selector': 'app-lexical-entry-decomp-form'},{'name': 'LexicalEntrySynsemFormComponent', 'selector': 'app-lexical-entry-synsem-form'},{'name': 'LexicalEntryTreeComponent', 'selector': 'app-lexical-entry-tree'},{'name': 'LexicalEntryVartransFormComponent', 'selector': 'app-lexical-entry-vartrans-form'},{'name': 'LexiconPageComponent', 'selector': 'app-lexicon-page'},{'name': 'LexiconPanelComponent', 'selector': 'app-lexicon-panel'},{'name': 'LinkPanelComponent', 'selector': 'app-link-panel'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MetadataPanelComponent', 'selector': 'app-metadata-panel'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotePanelComponent', 'selector': 'app-note-panel'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'ProfilePageComponent', 'selector': 'app-profile-page'},{'name': 'ProfilesTableComponent', 'selector': 'app-profiles-table'},{'name': 'SameAsComponent', 'selector': 'app-same-as'},{'name': 'SearchPageComponent', 'selector': 'app-search-page'},{'name': 'SeeAlsoComponent', 'selector': 'app-see-also'},{'name': 'SenseCoreFormComponent', 'selector': 'app-sense-core-form'},{'name': 'SenseTabComponent', 'selector': 'app-sense-tab'},{'name': 'SenseVartransFormComponent', 'selector': 'app-sense-vartrans-form'},{'name': 'SynsemTabComponent', 'selector': 'app-synsem-tab'},{'name': 'TextDetailComponent', 'selector': 'app-text-detail'},{'name': 'TextTabComponent', 'selector': 'app-text-tab'},{'name': 'TextTreeComponent', 'selector': 'app-text-tree'},{'name': 'VartransTabComponent', 'selector': 'app-vartrans-tab'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LinkPanelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LinkPanelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

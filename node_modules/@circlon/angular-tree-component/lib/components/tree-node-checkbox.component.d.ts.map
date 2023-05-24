@@ -1,0 +1,1 @@
+{"version":3,"file":"tree-node-checkbox.component.d.ts","sources":["tree-node-checkbox.component.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;;;AACA","sourcesContent":["import { TreeNode } from '../models/tree-node.model';\r\nexport declare class TreeNodeCheckboxComponent {\r\n    node: TreeNode;\r\n}\r\n"]}

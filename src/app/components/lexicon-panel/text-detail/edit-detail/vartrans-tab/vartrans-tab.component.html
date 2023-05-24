@@ -1,0 +1,47 @@
+﻿
+
+<div id="cardsAccordion" class="accordion" [hidden]="object == null">
+    <div class="card my-2">
+        <div class="card-header">
+            <h5 class="mb-0 w-100 d-flex justify-content-between align-self-center">
+                <div>
+                    <span class="btn">
+                        CREATED BY foo ON 11/12/2020 15:15
+                    </span>
+                </div>
+                <div>
+                    <button class="btn btn-link">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button class="btn btn-link" (click)="changeStatus()">
+                        <i class="fa fa-circle" *ngIf="lock==0" style="color: red"></i>
+                        <i class="fa fa-circle" *ngIf="lock==1" style="color: yellow"></i>
+                        <i class="fa fa-circle locked-tooltip" *ngIf="lock==2" data-toggle="tooltip"
+                            data-placement="bottom" data-html="true" title="Locked tooltip" style="color:green;"></i>
+                    </button>
+                </div>
+            </h5>
+        </div>
+        <div #expander [@slideInOut]="exp_trig" class="card-body">
+            <app-lexical-entry-vartrans-form [lexData]="lexicalEntryData" *ngIf="isLexicalEntry"></app-lexical-entry-vartrans-form>
+            <app-sense-vartrans-form [senseData]="senseData" *ngIf="isSense"></app-sense-vartrans-form>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="w-100 d-flex justify-content-between align-items-center">
+                <div>
+                    <span>LAST UPDATE ON 15/12/2020 14:30 BY foo</span>
+                </div>
+                <div class="btn-group dropup dropleft">
+                    <button class="btn btn-success" type="button" id="dropdownAddLemma" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"> <i class="fas fa-plus"></i> </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownAddLemma">
+                        <a class="dropdown-item" href="#">Add Form</a>
+                        <a class="dropdown-item" href="#">Add Sense</a>
+                        <a class="dropdown-item" href="#">Add Frame</a>
+                        <a class="dropdown-item" href="#">Add Lexical Concept</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

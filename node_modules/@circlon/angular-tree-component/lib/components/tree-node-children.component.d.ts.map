@@ -1,0 +1,1 @@
+{"version":3,"file":"tree-node-children.component.d.ts","sources":["tree-node-children.component.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;AACA;;;AACA","sourcesContent":["import { TreeNode } from '../models/tree-node.model';\r\nexport declare class TreeNodeChildrenComponent {\r\n    node: TreeNode;\r\n    templates: any;\r\n}\r\n"]}
